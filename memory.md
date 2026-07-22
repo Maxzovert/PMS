@@ -29,6 +29,7 @@ None — Phase 1 app scaffolds ready. Next: wire fonts/assets, logging, DB place
 
 - 2026-07-22: Added AI Engineering Handbook as project AI rules (`AGENTS.md`, `memory.md`, `.cursor/rules/*`, `documentation/ai-engineering-handbook.md`).
 - 2026-07-22: Initial UI design system doc (`documentation/ui/design.md`); palette locked; Satoshi + Plus Jakarta Sans fonts staged under `Fonts/`; pre-assets under `Assets/`.
+- 2026-07-22: Marketing/promotional composition rules added to `design.md` §5.1 (explicitly not whole-app).
 - 2026-07-22: Scaffolded `frontend/` (React/Vite) and `backend/` (Express); root `README.md` added.
 
 ## Feature Status
@@ -67,6 +68,7 @@ None yet (placeholder module only).
 - Brand font: Satoshi (`Fonts/Satoshi_Complete/`); UI/body: Plus Jakarta Sans (`Fonts/Plus_Jakarta_Sans/`).
 - Staging assets in `Assets/`; runtime path is `frontend/src/assets` (migrate next).
 - Support loading, empty, error, offline and success states.
+- Marketing/hero composition rules live in `design.md` §5.1 only — do not apply to operational PMS screens.
 
 ## Known Bugs
 
@@ -101,4 +103,4 @@ None tracked yet.
 
 ## Last Updated
 
-2026-07-22
+2026-07-22 (design.md §5.1 marketing scope)

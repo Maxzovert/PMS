@@ -192,11 +192,35 @@ No dedicated icon set folder yet beyond the PMS logo. Until a PARKAR icon pack i
 
 ## 5. Layout & surface principles (initial)
 
+**Scope:** These apply to the **operational PMS app** (dashboard, tables, forms, bookings, check-in). Do not force marketing-landing composition onto dense product screens.
+
 - **Canvas:** `#F6F6F5`; soft content wells `#E5F4EC` or white for readability-critical tables.
 - **Chrome:** Secondary `#0E3B35` for sidebar / top bar; primary `#34B17F` for the main action only (avoid “green everywhere”).
 - **Decoration:** Use wave/star/circle assets sparingly on auth, empty states, and onboarding — not on dense operational grids.
-- **Cards:** Prefer quiet surfaces (border `#878D95` at low opacity or mint wash) over heavy shadows; follow product UI rules when building screens.
+- **Cards:** Allowed when they group interactive or dense data (tables, booking rows, settings panels). Prefer quiet surfaces (border `#878D95` at low opacity or mint wash) over heavy shadows.
+- **One job per section:** Each section should have one purpose, one headline, and usually one short supporting sentence.
 - **States to design for:** loading, empty, error, offline, success (see empty-state assets above).
+- **Preserve the system:** When extending existing screens, match established patterns, structure, and visual language from this doc — do not invent a parallel look.
+
+---
+
+## 5.1 Marketing / promotional surfaces only
+
+**Do not apply this subsection to the whole app.** Use it only for landing pages, marketing moments, and promotional first-viewports (e.g. public marketing site, rare brand splash). Operational PMS UI follows §5 above.
+
+When designing those surfaces:
+
+- **One composition:** The first viewport must read as one composition, not a dashboard.
+- **Brand first:** Brand or product name is a hero-level signal, not only nav text. No headline should overpower the brand. Brand test: if the first viewport could belong to another brand after removing the nav, branding is too weak.
+- **Typography:** Use Satoshi + Plus Jakarta Sans (see §3); avoid default stacks (Inter, Roboto, Arial, system-only).
+- **Background:** Prefer gradients, imagery, or subtle patterns over a flat single color for atmosphere — still within the PARKAR palette.
+- **Full-bleed hero:** Hero image is an edge-to-edge visual plane or background. Avoid inset hero images, side-panel heroes, rounded media cards, tiled collages, or floating image blocks unless this doc later requires them.
+- **Hero budget:** First viewport usually contains only brand, one headline, one short supporting sentence, one CTA group, and one dominant image. Do not pack stats, schedules, address blocks, promos, or secondary marketing into the first viewport.
+- **No hero overlays:** No detached labels, floating badges, promo stickers, info chips, or callout boxes on top of hero media.
+- **Cards on marketing:** Default no cards in the hero. Elsewhere, cards only when they contain a clear user interaction; if removing border/shadow/radius does not hurt understanding, do not use a card.
+- **Reduce clutter:** Avoid pill clusters, stat strips, icon rows, boxed promos, and competing text blocks.
+- **Motion:** Ship 2–3 intentional motions for presence and hierarchy — not noise. Prefer subtle operational motion in the PMS app (§8 follow-ups).
+- **Avoid AI-default looks:** Do not default to purple-on-white / purple–indigo gradients; warm cream + terracotta serif; or broadsheet hairline / zero-radius newspaper layouts. Avoid bias toward dark mode, purple glow, rounded-full pills, multi-layer shadows, or emoji decoration unless approved.
 
 ---
 
@@ -235,3 +259,4 @@ No dedicated icon set folder yet beyond the PMS logo. Until a PARKAR icon pack i
 | Date | Change |
 |------|--------|
 | 2026-07-22 | Initial design.md: palette, Satoshi + Plus Jakarta Sans, asset inventory |
+| 2026-07-22 | Scoped marketing/promotional composition rules to §5.1 — not whole-app PMS UI |

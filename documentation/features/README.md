@@ -2,7 +2,11 @@
 
 One major feature per file. Use the template in [ai-engineering-handbook.md](../ai-engineering-handbook.md).
 
-Planned files:
+Active:
+
+- `api-response-foundation.md` — success/error envelope, request IDs, health DB status
+
+Planned:
 
 - `authentication.md`
 - `owner-profile.md`

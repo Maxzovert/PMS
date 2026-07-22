@@ -10,12 +10,12 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 
 ## Status
 
-**Phase 1 — Foundation** (scaffold in progress)
+**Phase 1 — Foundation** (scaffold + design tokens; features not yet)
 
 | Area | State |
 |------|--------|
-| Frontend | React + Vite + JavaScript (JSX) scaffold (`client/`) |
-| Backend | Node.js + Express + JavaScript scaffold + `GET /health` (`server/`) |
+| Frontend | React + Vite + JavaScript (JSX); fonts/assets/tokens wired (`client/`) |
+| Backend | Express + JS; logger, error envelope, optional `pg` pool, `GET /health` (`server/`) |
 | Auth / bookings / payments | Documented only — not implemented |
 
 ---
@@ -27,7 +27,7 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 | Frontend | React, Vite, JavaScript (JSX) |
 | Backend | Node.js, Express, JavaScript |
 | Architecture | Modular monolith (shared backend with Driver App / Admin later) |
-| Database | PostgreSQL (planned — not wired yet) |
+| Database | PostgreSQL via `pg` when `DATABASE_URL` is set (no schema/migrations yet) |
 
 ---
 
@@ -36,11 +36,13 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 ```text
 PMS/
 ├── client/             # React owner portal (JavaScript / JSX)
+│   └── src/assets/     # Runtime fonts, logo, decor (import only from here)
 ├── server/             # Express API (JavaScript)
+├── notes/              # Easy learning notes for foundation concepts
 ├── Docs/               # Product PRD, architecture, phases (legacy location)
 ├── documentation/      # AI handbook, UI design, feature docs
-├── Assets/             # Staging logos & decorative assets
-├── Fonts/              # Satoshi + Plus Jakarta Sans
+├── Assets/             # Staging archive (do not import in app)
+├── Fonts/              # Staging archive (do not import in app)
 ├── AGENTS.md           # Short AI instructions
 ├── memory.md           # Current project truth for AI
 └── README.md           # This file — keep updated
@@ -84,8 +86,8 @@ npm run dev
 
 - Palette, typography, and assets: [`documentation/ui/design.md`](documentation/ui/design.md)
 - Primary `#34B17F` · Secondary `#0E3B35`
-- Brand font: Satoshi · UI font: Plus Jakarta Sans
-- Runtime UI assets must live under `client/src/assets` (staging copies are in `Assets/` / `Fonts/`)
+- Brand font: Satoshi · UI font: Plus Jakarta Sans (self-hosted in `client/src/assets/fonts/`)
+- Runtime UI assets: `client/src/assets/` only (`Assets/` / `Fonts/` are staging archives)
 
 ---
 
@@ -97,6 +99,7 @@ npm run dev
 | [`Docs/architecture.md`](Docs/architecture.md) | Technical design |
 | [`Docs/phases.md`](Docs/phases.md) | Phased build plan |
 | [`documentation/ai-engineering-handbook.md`](documentation/ai-engineering-handbook.md) | AI / contributor operating manual |
+| [`notes/`](notes/README.md) | Easy concept notes (logger, app.js, DB, …) |
 | [`AGENTS.md`](AGENTS.md) | Always-on AI rules |
 | [`memory.md`](memory.md) | Concise current project truth |
 

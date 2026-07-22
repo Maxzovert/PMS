@@ -124,3 +124,51 @@ body {
   height: auto;
   margin-top: 0.5rem;
 }
+
+.app-health {
+  margin-top: 1.25rem;
+  padding: 0.875rem 1rem;
+  max-width: 28rem;
+  border: 1px solid color-mix(in srgb, var(--color-border) 45%, transparent);
+  background: var(--color-surface-elevated);
+}
+
+.app-health--loading {
+  border-color: color-mix(in srgb, var(--color-border) 45%, transparent);
+}
+
+.app-health--ok {
+  background: var(--color-surface-muted);
+  border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+}
+
+.app-health--error {
+  background: var(--color-accent-soft);
+  border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
+}
+
+.app-health__label {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-caption);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.app-health__message {
+  margin: 0;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-body-sm);
+  font-weight: 500;
+  color: var(--color-secondary);
+}
+
+.app-health__detail {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-caption);
+  color: var(--color-text-muted);
+  word-break: break-all;
+}

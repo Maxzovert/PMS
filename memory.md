@@ -13,12 +13,12 @@ Phase 1 — Foundation (scaffold, design tokens, server logging/errors/DB pool; 
 
 ## Active Task
 
-None — server foundation wired; learning `notes/` added. Next: client API communication layer (`VITE_API_BASE_URL`).
+None — client API layer wired. Next: routing + auth placeholder shell.
 
 ## Current Architecture
 
 - Target: modular monolith (MVP), not microservices.
-- **Frontend:** `client/` — React + Vite + JavaScript/JSX (port 5173).
+- **Frontend:** `client/` — React + Vite + JavaScript/JSX (port 5173); API helper in `src/api/` via `VITE_API_BASE_URL`.
 - **Backend:** `server/` — Node.js + Express + JavaScript (port 3000, `GET /health`).
 - Interfaces: Driver App, PARKAR PMS, Admin Dashboard — shared backend.
 - Source of product truth today: `Docs/prd.md`, `Docs/architecture.md`, `Docs/phases.md`.
@@ -35,7 +35,7 @@ None — server foundation wired; learning `notes/` added. Next: client API comm
 - 2026-07-23: Client converted from TypeScript/TSX to JavaScript/JSX (Vite, no `tsc`).
 - 2026-07-23: Migrated fonts/assets into `client/src/assets`; wired CSS design tokens + `@font-face` in `client/src/index.css`; favicon from PMS logo.
 - 2026-07-23: Server foundation — JSON logger, request IDs, AppError + error middleware, success envelope, optional `pg` pool from `DATABASE_URL`, `/health` reports DB status.
-- 2026-07-23: Moved DB SQL into `server/sql/*.sql`; removed embedded ensure-db queries; added `npm run db:sql` file runner.
+- 2026-07-23: Client API layer (`client/src/api`) with envelope parsing, `X-Request-Id`, `getHealth()` smoke check on scaffold page.
 
 ## Feature Status
 
@@ -95,10 +95,9 @@ None tracked yet.
 
 ## Next Tasks
 
-1. Client API communication layer (`VITE_API_URL`).
-2. Routing + auth placeholder shell.
-3. Migrate or mirror `Docs/` content into `documentation/` feature/architecture files.
-4. Implement authentication feature with docs + tests per handbook.
+1. Routing + auth placeholder shell.
+2. Migrate or mirror `Docs/` content into `documentation/` feature/architecture files.
+3. Implement authentication feature with docs + tests per handbook.
 
 ## Important Documentation Links
 
@@ -114,4 +113,4 @@ None tracked yet.
 
 ## Last Updated
 
-2026-07-23 (learning notes/ folder added)
+2026-07-23 (client API layer)

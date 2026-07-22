@@ -23,6 +23,17 @@ API base URL must point at the running server (`VITE_API_BASE_URL`, default `htt
 | `npm run build` | Production build |
 | `npm run preview` | Preview production build |
 
+## Routes (Phase 1 shell)
+
+| Path | Page |
+|------|------|
+| `/` | Redirect to login or dashboard |
+| `/login` | Auth placeholder (OTP UI disabled) |
+| `/dashboard` | Protected stub + API health |
+| `*` | Not found |
+
+Auth is a **dev stub** (`sessionStorage`) — not real OTP/sessions. Use “Continue to dashboard (dev stub)” on the login page.
+
 ## API layer
 
 Shared helpers live in `src/api/`:
@@ -30,8 +41,6 @@ Shared helpers live in `src/api/`:
 - `apiGet` / `apiPost` / … — envelope-aware fetch
 - `getHealth()` — `GET /health` smoke check
 - `ApiError` — failed calls
-
-The scaffold page shows API status using `getHealth()`.
 
 ## Structure
 

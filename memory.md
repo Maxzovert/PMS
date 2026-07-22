@@ -9,17 +9,17 @@ PARKAR PMS is the parking-owner / operator web portal for the PARKAR marketplace
 
 ## Current Phase
 
-Phase 1 — Foundation (scaffold, design tokens, server logging/errors/DB pool; features not implemented).
+Phase 1 — Foundation (tokens, server foundation, API layer, routing + auth shell; real features not implemented).
 
 ## Active Task
 
-None — client API layer wired. Next: routing + auth placeholder shell.
+None — routing + auth placeholder shell done. Next: Authentication feature (OTP) with docs + tests, or Docs → documentation migration.
 
 ## Current Architecture
 
 - Target: modular monolith (MVP), not microservices.
-- **Frontend:** `client/` — React + Vite + JavaScript/JSX (port 5173); API helper in `src/api/` via `VITE_API_BASE_URL`.
-- **Backend:** `server/` — Node.js + Express + JavaScript (port 3000, `GET /health`).
+- **Frontend:** `client/` — React + Vite + JSX (5173); `src/api/`; React Router; stub auth shell.
+- **Backend:** `server/` — Express + JS (3000, `GET /health`).
 - Interfaces: Driver App, PARKAR PMS, Admin Dashboard — shared backend.
 - Source of product truth today: `Docs/prd.md`, `Docs/architecture.md`, `Docs/phases.md`.
 - Canonical AI/docs layout: `documentation/` (see handbook). Existing `Docs/` remains until migrated.
@@ -36,12 +36,13 @@ None — client API layer wired. Next: routing + auth placeholder shell.
 - 2026-07-23: Migrated fonts/assets into `client/src/assets`; wired CSS design tokens + `@font-face` in `client/src/index.css`; favicon from PMS logo.
 - 2026-07-23: Server foundation — JSON logger, request IDs, AppError + error middleware, success envelope, optional `pg` pool from `DATABASE_URL`, `/health` reports DB status.
 - 2026-07-23: Client API layer (`client/src/api`) with envelope parsing, `X-Request-Id`, `getHealth()` smoke check on scaffold page.
+- 2026-07-23: Routing + auth placeholder (`react-router-dom`, `/login`, `/dashboard`, stub `AuthContext` / `ProtectedRoute`).
 
 ## Feature Status
 
 | Feature | Status |
 |---------|--------|
-| Authentication / OTP | Documented only |
+| Authentication / OTP | Documented only (UI shell placeholder only) |
 | Owner profile | Documented only |
 | Parking registration | Documented only |
 | Availability / capacity | Documented only |
@@ -67,6 +68,7 @@ None yet for product tables. SQL scripts live in `server/sql/` (not in `src/`). 
 - OTP, passwords, tokens, card and KYC data must never be logged or stored in plain form.
 - Approval required for auth, payment and destructive schema changes.
 - API errors never return stack traces or secrets to clients in production.
+- Phase 1 client auth stub uses tab `sessionStorage` only — not a real session; never treat as production auth.
 
 ## UI Decisions
 
@@ -95,9 +97,8 @@ None tracked yet.
 
 ## Next Tasks
 
-1. Routing + auth placeholder shell.
+1. Implement authentication feature (OTP) with `documentation/features/authentication.md` + tests per handbook.
 2. Migrate or mirror `Docs/` content into `documentation/` feature/architecture files.
-3. Implement authentication feature with docs + tests per handbook.
 
 ## Important Documentation Links
 
@@ -113,4 +114,4 @@ None tracked yet.
 
 ## Last Updated
 
-2026-07-23 (client API layer)
+2026-07-23 (routing + auth placeholder shell)

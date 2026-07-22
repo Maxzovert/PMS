@@ -45,7 +45,7 @@ This folder is only to help **you** understand.
 | # | File | Topic |
 |---|------|--------|
 | 11 | [11-client-api-layer.md](11-client-api-layer.md) | How the React app will call the API |
-| 12 | [12-routing-auth-shell.md](12-routing-auth-shell.md) | Pages/URLs and empty login shell |
+| 12 | [12-routing-auth-shell.md](12-routing-auth-shell.md) | React Router + login/dashboard stub (built) |
 | 14 | [14-sql-files.md](14-sql-files.md) | SQL lives in `server/sql/*.sql`, not in app code |
 
 ---

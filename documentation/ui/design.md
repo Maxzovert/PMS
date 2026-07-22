@@ -4,7 +4,7 @@
 |-------|-------|
 | **Status** | Draft — foundation |
 | **Product** | PARKAR PMS (Parking Owner Mode) |
-| **Last updated** | 2026-07-22 |
+| **Last updated** | 2026-07-23 |
 | **Authority** | Approved founder palette + assets; implement against this doc |
 
 This is the initial visual design source of truth for PARKAR PMS. Expand with components, spacing tokens, and screen specs as UI work starts. Do not invent a parallel palette or type stack.
@@ -87,10 +87,10 @@ PARKAR PMS should feel **trustworthy, calm, and operational** — a green, natur
 | Item | Detail |
 |------|--------|
 | **Family** | Satoshi (Fontshare / Indian Type Foundry) |
-| **Location** | `Fonts/Satoshi_Complete/` |
-| **Web kit** | `Fonts/Satoshi_Complete/Fonts/WEB/` (+ `css/satoshi.css`) |
-| **Weights** | Light 300, Regular 400, Medium 500, Bold 700, Black 900 (+ italics); variable available |
-| **License** | Fontshare FFL — see `Fonts/Satoshi_Complete/License/FFL.txt` |
+| **Location (runtime)** | `client/src/assets/fonts/satoshi/` (variable woff2) |
+| **Staging archive** | `Fonts/Satoshi_Complete/` (full kit; prefer runtime path in app) |
+| **Weights** | Light 300, Regular 400, Medium 500, Bold 700, Black 900 (+ italics); variable wired in `client/src/index.css` |
+| **License** | Fontshare FFL — `client/src/assets/fonts/licenses/Satoshi-FFL.txt` |
 | **Role** | Brand display, page titles, section headings, logo lockups, marketing-adjacent PMS chrome |
 
 **Usage guidance**
@@ -107,9 +107,10 @@ Downloaded for local use as a complementary geometric sans for dense UI (tables,
 | **Family** | Plus Jakarta Sans |
 | **Source** | [Google Fonts](https://fonts.google.com/specimen/Plus+Jakarta+Sans) / [tokotype/PlusJakartaSans](https://github.com/tokotype/plusjakartasans) |
 | **Version** | 2.7.1 |
-| **Location** | `Fonts/Plus_Jakarta_Sans/PlusJakartaSans-2.7.1/` |
-| **Formats** | Static `ttf/` + variable `variable/` |
-| **License** | SIL OFL 1.1 — `Fonts/Plus_Jakarta_Sans/PlusJakartaSans-2.7.1/OFL.txt` |
+| **Location (runtime)** | `client/src/assets/fonts/plus-jakarta-sans/` (variable TTF) |
+| **Staging archive** | `Fonts/Plus_Jakarta_Sans/PlusJakartaSans-2.7.1/` |
+| **Formats** | Variable TTFs wired in app; staging still has static `ttf/` |
+| **License** | SIL OFL 1.1 — `client/src/assets/fonts/licenses/PlusJakartaSans-OFL.txt` |
 | **Role** | Body copy, labels, inputs, tables, helper text, compact dashboard UI |
 
 **Recommended pairing**
@@ -141,19 +142,19 @@ Refine once components exist; start here:
 
 ## 4. Assets inventory
 
-Current staging location: `Assets/`. Per project rules, runtime assets must live under `src/assets` once the frontend is scaffolded — migrate, do not duplicate forever.
+**Runtime (use these in code):** `client/src/assets/`. Staging copies remain under `Assets/` / `Fonts/` for archive; do not import from staging in the app.
 
 ### 4.1 Logo
 
 | File | Path | Use |
 |------|------|-----|
-| PMS icon | `Assets/Logo/Pms_Icon.png` | App icon, favicon source, auth/header mark |
+| PMS icon | `client/src/assets/logo/Pms_Icon.png` | App icon, favicon (`client/public/favicon.png`), auth/header mark |
 
 Expand later with full wordmark / horizontal lockup if provided.
 
-### 4.2 Decorative items (`Assets/decor-items/`)
+### 4.2 Decorative items (`client/src/assets/decor/`)
 
-**Lines / ornaments** — `Assets/decor-items/lines/`
+**Lines / ornaments** — `client/src/assets/decor/lines/`
 
 | File | Suggested use |
 |------|----------------|
@@ -169,7 +170,7 @@ Expand later with full wordmark / horizontal lockup if provided.
 
 Wave SVGs in-repo already use mint stroke (e.g. `#BFEBDD`) — keep them on `#F6F6F5` / `#E5F4EC` surfaces so they stay on-brand.
 
-**Empty / system states** — `Assets/decor-items/states/`
+**Empty / system states** — `client/src/assets/decor/states/`
 
 | File | Suggested use |
 |------|----------------|
@@ -179,7 +180,7 @@ Wave SVGs in-repo already use mint stroke (e.g. `#BFEBDD`) — keep them on `#F6
 
 ### 4.3 Ideas & other
 
-`Assets/ideas/` — reference / exploration material; not production UI unless promoted into `decor-items` or `src/assets` with an explicit decision.
+`Assets/ideas/` (staging only) — reference / exploration material; not production UI unless promoted into `client/src/assets` with an explicit decision.
 
 ### 4.4 Icons
 
@@ -234,19 +235,19 @@ When designing those surfaces:
 
 ---
 
-## 7. Implementation notes (when scaffolding)
+## 7. Implementation notes
 
-1. Move approved fonts into the app font pipeline (self-host Satoshi + Plus Jakarta Sans; prefer `woff2` for Satoshi WEB kit).
-2. Move approved images/SVGs to `src/assets` and reference only from there.
-3. Publish tokens as CSS variables (and later theme object) matching §2–§3.
-4. Do not load Google Fonts from a CDN in production if self-hosting is the standard — files are already in `Fonts/Plus_Jakarta_Sans/`.
+1. Fonts are self-hosted under `client/src/assets/fonts/` (Satoshi variable woff2; Plus Jakarta Sans variable TTF). Wired via `@font-face` in `client/src/index.css`.
+2. Images/SVGs live under `client/src/assets/` — reference only from there (not from staging `Assets/`).
+3. Design tokens are CSS variables in `client/src/index.css` matching §2–§3 (theme object can follow later).
+4. Do not load Google Fonts from a CDN — self-hosting is the standard.
 
 ---
 
 ## 8. Open design follow-ups
 
 - [ ] Full logo lockups (wordmark, dark/light variants)
-- [ ] Icon set decision and folder under `Assets/` → `src/assets`
+- [ ] Icon set decision and folder under `client/src/assets`
 - [ ] Component library (button, input, table, badge, toast) specs
 - [ ] Spacing / radius / elevation scale
 - [ ] Motion guidelines for PMS (subtle, operational — not marketing-heavy)
@@ -260,3 +261,4 @@ When designing those surfaces:
 |------|--------|
 | 2026-07-22 | Initial design.md: palette, Satoshi + Plus Jakarta Sans, asset inventory |
 | 2026-07-22 | Scoped marketing/promotional composition rules to §5.1 — not whole-app PMS UI |
+| 2026-07-23 | Migrated fonts/assets into `client/src/assets`; CSS tokens + `@font-face` in `index.css` |

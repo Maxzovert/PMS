@@ -9,11 +9,11 @@ PARKAR PMS is the parking-owner / operator web portal for the PARKAR marketplace
 
 ## Current Phase
 
-Phase 1 — Foundation (folder scaffold complete; features not implemented).
+Phase 1 — Foundation (scaffold, design tokens, server logging/errors/DB pool; features not implemented).
 
 ## Active Task
 
-None — Phase 1 app scaffolds ready. Next: wire fonts/assets, logging, DB placeholder.
+None — server foundation wired; learning `notes/` added. Next: client API communication layer (`VITE_API_BASE_URL`).
 
 ## Current Architecture
 
@@ -33,6 +33,9 @@ None — Phase 1 app scaffolds ready. Next: wire fonts/assets, logging, DB place
 - 2026-07-22: Scaffolded `frontend/` (React/Vite) and `backend/` (Express); root `README.md` added.
 - 2026-07-23: Renamed apps to `client/` and `server/`; backend converted from TypeScript to plain JavaScript (no build step).
 - 2026-07-23: Client converted from TypeScript/TSX to JavaScript/JSX (Vite, no `tsc`).
+- 2026-07-23: Migrated fonts/assets into `client/src/assets`; wired CSS design tokens + `@font-face` in `client/src/index.css`; favicon from PMS logo.
+- 2026-07-23: Server foundation — JSON logger, request IDs, AppError + error middleware, success envelope, optional `pg` pool from `DATABASE_URL`, `/health` reports DB status.
+- 2026-07-23: Rewrote `notes/` in plain-language teaching style (what/why/how-in-this-project).
 
 ## Feature Status
 
@@ -50,11 +53,12 @@ None — Phase 1 app scaffolds ready. Next: wire fonts/assets, logging, DB place
 
 ## API Changes
 
-- `GET /health` — backend liveness (scaffold only).
+- `GET /health` — liveness + `data.database` status; success envelope `{ success, data, message, requestId }`.
+- Error envelope: `{ success: false, error: { code, message, requestId } }` (see `documentation/features/api-response-foundation.md`).
 
 ## Database Changes
 
-None yet (placeholder module only).
+None yet (no migrations). Optional PostgreSQL pool via `pg` when `DATABASE_URL` is set; skipped when unset.
 
 ## Security Decisions
 
@@ -62,13 +66,14 @@ None yet (placeholder module only).
 - No secrets in repo; commit `.env.example` only.
 - OTP, passwords, tokens, card and KYC data must never be logged or stored in plain form.
 - Approval required for auth, payment and destructive schema changes.
+- API errors never return stack traces or secrets to clients in production.
 
 ## UI Decisions
 
 - Design source of truth: `documentation/ui/design.md`.
 - Primary `#34B17F`; secondary `#0E3B35`; full palette documented in design.md.
-- Brand font: Satoshi (`Fonts/Satoshi_Complete/`); UI/body: Plus Jakarta Sans (`Fonts/Plus_Jakarta_Sans/`).
-- Staging assets in `Assets/`; runtime path is `client/src/assets` (migrate next).
+- Brand font: Satoshi; UI/body: Plus Jakarta Sans — self-hosted under `client/src/assets/fonts/`.
+- Runtime assets: `client/src/assets/` (logo, decor). Staging `Assets/` / `Fonts/` remain as archive only — do not import from staging in app code.
 - Support loading, empty, error, offline and success states.
 - Marketing/hero composition rules live in `design.md` §5.1 only — do not apply to operational PMS screens.
 
@@ -79,7 +84,8 @@ None tracked yet.
 ## Technical Debt
 
 - Product docs live in `Docs/`; AI handbook expects `documentation/`. Prefer updating both until a single tree is approved.
-- Fonts/assets still in staging folders; not yet copied into `client/src/assets`.
+- Staging `Assets/` / `Fonts/` still present alongside runtime copies — remove or archive when approved.
+- No automated API tests yet for health/error envelope.
 
 ## Pending Founder Decisions
 
@@ -89,20 +95,22 @@ None tracked yet.
 
 ## Next Tasks
 
-1. Migrate staging `Assets/` / `Fonts/` into `client/src/assets` and wire design tokens.
-2. Add server logging / consistent error format; prepare DB connection.
+1. Client API communication layer (`VITE_API_URL`).
+2. Routing + auth placeholder shell.
 3. Migrate or mirror `Docs/` content into `documentation/` feature/architecture files.
 4. Implement authentication feature with docs + tests per handbook.
 
 ## Important Documentation Links
 
 - `README.md` — project overview and quick start (keep updated)
+- `notes/` — easy learning notes for foundation concepts (human study aid)
 - `documentation/ai-engineering-handbook.md` — AI operating manual
 - `documentation/ui/design.md` — UI design system (palette, type, assets)
+- `documentation/features/api-response-foundation.md` — API success/error envelope
 - `Docs/architecture.md` — technical design
 - `Docs/prd.md` — product requirements
 - `Docs/phases.md` — phased build plan
 
 ## Last Updated
 
-2026-07-23 (client JSX + server JS stack)
+2026-07-23 (learning notes/ folder added)

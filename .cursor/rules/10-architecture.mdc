@@ -1,0 +1,19 @@
+---
+description: PARKAR layering and module boundaries
+alwaysApply: true
+---
+
+# Architecture
+
+- Prefer the modular monolith for MVP. Do not introduce microservices without an ADR in `documentation/decisions/`.
+- Driver App, PMS and Admin share one backend, database, booking engine and availability engine.
+- Respect layering:
+
+```
+Request → Route/Controller → Validation → Authorization → Service → Repository → Audit/Events → Response
+```
+
+- Controllers stay thin; business rules live in services/domain; DB access in repositories.
+- Reuse existing modules under `src/` (`components`, `modules`, `pages`, `services`, `hooks`, `utils`, `types`).
+- Never create a new top-level folder without approval.
+- Large rewrites, dependency replacements and architecture changes require approval plus an ADR when they affect security, data models or long-term maintenance.

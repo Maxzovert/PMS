@@ -1,0 +1,19 @@
+---
+description: Security rules for PARKAR source code
+globs: "{src,server,api,backend}/**/*"
+alwaysApply: false
+---
+
+# Security
+
+- Treat all external input as untrusted; validate on the server.
+- Enforce authorization on the server; never trust client role or owner ID.
+- Never hardcode secrets; use env vars; commit `.env.example` only.
+- Never log passwords, OTPs, tokens, card data, full bank data or KYC documents.
+- Use parameterized queries or the approved ORM.
+- Verify webhook signatures; use idempotency for payments and retries.
+- Use transactions for financial, booking and inventory/capacity changes.
+- Rate-limit OTP and login; expire and rotate sessions.
+- File uploads: allowlist type/size, server-side names, private buckets + signed URLs for KYC.
+- Require approval for auth model, payment rules and destructive schema changes.
+- Add security tests for sensitive flows.

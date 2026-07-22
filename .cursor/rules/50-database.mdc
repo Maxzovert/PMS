@@ -1,0 +1,17 @@
+---
+description: Schema, migrations and database integrity for PARKAR
+globs: "{**/migrations/**,**/prisma/**,**/db/**,**/database/**,**/*migration*}"
+alwaysApply: false
+---
+
+# Database
+
+- Every schema change needs a migration; never edit production schema manually.
+- Use foreign keys and constraints; index from real access patterns.
+- Use transactions for multi-step state changes (booking, capacity, payments).
+- Preserve financial and booking records; store timestamps in UTC.
+- Never store plain OTPs, passwords or card data.
+- Before applying a migration: forward path, rollback, backfill and deployment order.
+- Document tables/fields in `documentation/database/`.
+- Destructive changes (drop column/table, data deletion) require explicit approval.
+- Update `memory.md` Database Changes when a migration lands.

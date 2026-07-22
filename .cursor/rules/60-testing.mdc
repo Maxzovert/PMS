@@ -1,0 +1,21 @@
+---
+description: Unit, integration and regression testing for PARKAR
+globs: "{**/*.{test,spec}.{js,jsx},**/tests/**,**/__tests__/**}"
+alwaysApply: false
+---
+
+# Testing
+
+| Type | Required for |
+|------|----------------|
+| Unit | Business rules, calculations, validators |
+| Integration | DB, API, storage, SMS, payment |
+| End-to-end | Critical owner and booking flows |
+| Security | Authorization and abuse controls |
+| Concurrency | Capacity, booking and payment races |
+| Regression | Existing affected flows |
+
+- Do not finish behavior changes without relevant tests.
+- Cover success, failure and edge cases for changed logic.
+- Report: tests run, passed, skipped and remaining risk.
+- Prefer fixing the product over hiding failures or skipping gates without approval.

@@ -1,0 +1,16 @@
+---
+description: Documentation and memory updates for PARKAR
+alwaysApply: true
+---
+
+# Documentation
+
+- Documentation-first: major features get `documentation/features/<name>.md` before or with implementation.
+- Small changes update the existing feature doc; do not leave business rules only in code.
+- Use the feature template (Status, Purpose, Users, Scope, Flows, Business Rules, API, DB, Validation, AuthZ, Security, Errors, Tests, Rollback, Change History).
+- Architecture/security/data decisions → ADR in `documentation/decisions/`.
+- After every completed task: update relevant docs and `memory.md` in the same change set.
+- Write facts, not speculation; date decisions; link docs; never store secrets or PII in memory.
+- Keep `memory.md` concise enough for AI context; move outdated detail to `documentation/archive/`.
+- Full manual: `documentation/ai-engineering-handbook.md`.
+- Until migrated, also consult `Docs/prd.md`, `Docs/architecture.md`, `Docs/phases.md`.

@@ -1,0 +1,33 @@
+---
+description: API, services and business logic for PARKAR
+globs: "{src,server,api,backend}/**/*"
+alwaysApply: false
+---
+
+# Backend
+
+```
+Request → Route/Controller → Validation → Authorization → Service → Repository → Audit → Response
+```
+
+- Controllers remain thin; business rules in services; DB access in repositories.
+- Validate all external input (body, params, headers, uploads, webhooks).
+- Verify authorization server-side for every protected endpoint.
+- Use typed/consistent errors; never expose stack traces in production.
+- Paginate unbounded lists; version breaking API changes.
+- Document request, response, validation and authorization.
+- Prefer stable error codes:
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "OTP_EXPIRED",
+    "message": "The verification code has expired.",
+    "requestId": "req_..."
+  }
+}
+```
+
+- Use idempotency for retry-sensitive actions (payments, webhooks, capacity).
+- Never invent API fields or silently change public contracts.

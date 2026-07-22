@@ -1,0 +1,31 @@
+---
+description: PARKAR universal AI workflow
+alwaysApply: true
+---
+
+# PARKAR Core Workflow
+
+1. Read `AGENTS.md`.
+2. Read `memory.md`.
+3. Read relevant files in `documentation/` (and `Docs/` while migration is pending).
+4. Inspect only relevant code modules.
+5. Write a plan before edits (files, data flow, tests, security).
+6. Identify security impact; ask before destructive or architectural changes.
+7. Reuse architecture, components and utilities; minimize scope.
+8. Use assets only from `src/assets`.
+9. Implement the smallest safe change.
+10. Run relevant tests.
+11. Update documentation and `memory.md` in the same change set.
+12. Report changed files, tests run and remaining risks.
+
+## Do
+
+- Follow existing patterns; never invent a parallel standard.
+- Preserve API and schema compatibility unless approved.
+- Keep secrets out of code, logs and prompts.
+
+## Do not
+
+- Delete files because they look unused.
+- Rewrite whole modules for small changes.
+- Finish without tests, docs or memory updates when the task changed behavior.

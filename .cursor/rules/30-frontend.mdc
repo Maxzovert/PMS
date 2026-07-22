@@ -1,0 +1,20 @@
+---
+description: React, JavaScript, UI and accessibility for PARKAR PMS
+globs: "{src,frontend,web,app}/**/*.{js,jsx,css,scss}"
+alwaysApply: false
+---
+
+# Frontend
+
+- Language: JavaScript for all new frontend files.
+- Small functional components with one clear responsibility.
+- Separate server state, form state and local UI state.
+- API calls go through the service layer — not directly from presentational components.
+- Forms: schema validation and field-level errors.
+- Always handle loading, empty, success and error states.
+- Accessibility: semantic HTML, labels, keyboard access, visible focus, contrast.
+- Styling: existing tokens, components, spacing, typography and PARKAR green theme.
+- Assets only from `src/assets`; search before adding; meaningful alt text.
+- Hidden UI is not authorization; do not trust client-only checks.
+- Do not insert untrusted HTML; mask bank/identity data; prevent duplicate submissions.
+- Avoid long-lived sensitive tokens in `localStorage` unless approved.

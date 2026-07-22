@@ -14,7 +14,7 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 
 | Area | State |
 |------|--------|
-| Frontend | React + Vite + JavaScript (JSX); fonts/assets/tokens wired (`client/`) |
+| Frontend | React + Vite + JSX; API layer + routing/auth shell (`client/`) |
 | Backend | Express + JS; logger, error envelope, optional `pg` pool, `GET /health` (`server/`) |
 | Auth / bookings / payments | Documented only — not implemented |
 

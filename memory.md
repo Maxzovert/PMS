@@ -9,17 +9,17 @@ PARKAR PMS is the parking-owner / operator web portal for the PARKAR marketplace
 
 ## Current Phase
 
-Phase 1 — Foundation (scaffold, design tokens, server logging/errors/DB pool; features not implemented).
+Phase 1 — Foundation (tokens, server foundation, API layer, routing + auth shell; real features not implemented).
 
 ## Active Task
 
-None — server foundation wired; learning `notes/` added. Next: client API communication layer (`VITE_API_BASE_URL`).
+None — routing + auth placeholder shell done. Next: Authentication feature (OTP) with docs + tests, or Docs → documentation migration.
 
 ## Current Architecture
 
 - Target: modular monolith (MVP), not microservices.
-- **Frontend:** `client/` — React + Vite + JavaScript/JSX (port 5173).
-- **Backend:** `server/` — Node.js + Express + JavaScript (port 3000, `GET /health`).
+- **Frontend:** `client/` — React + Vite + JSX (5173); `src/api/`; React Router; stub auth shell.
+- **Backend:** `server/` — Express + JS (3000, `GET /health`).
 - Interfaces: Driver App, PARKAR PMS, Admin Dashboard — shared backend.
 - Source of product truth today: `Docs/prd.md`, `Docs/architecture.md`, `Docs/phases.md`.
 - Canonical AI/docs layout: `documentation/` (see handbook). Existing `Docs/` remains until migrated.
@@ -35,13 +35,14 @@ None — server foundation wired; learning `notes/` added. Next: client API comm
 - 2026-07-23: Client converted from TypeScript/TSX to JavaScript/JSX (Vite, no `tsc`).
 - 2026-07-23: Migrated fonts/assets into `client/src/assets`; wired CSS design tokens + `@font-face` in `client/src/index.css`; favicon from PMS logo.
 - 2026-07-23: Server foundation — JSON logger, request IDs, AppError + error middleware, success envelope, optional `pg` pool from `DATABASE_URL`, `/health` reports DB status.
-- 2026-07-23: Rewrote `notes/` in plain-language teaching style (what/why/how-in-this-project).
+- 2026-07-23: Client API layer (`client/src/api`) with envelope parsing, `X-Request-Id`, `getHealth()` smoke check on scaffold page.
+- 2026-07-23: Routing + auth placeholder (`react-router-dom`, `/login`, `/dashboard`, stub `AuthContext` / `ProtectedRoute`).
 
 ## Feature Status
 
 | Feature | Status |
 |---------|--------|
-| Authentication / OTP | Documented only |
+| Authentication / OTP | Documented only (UI shell placeholder only) |
 | Owner profile | Documented only |
 | Parking registration | Documented only |
 | Availability / capacity | Documented only |
@@ -58,7 +59,7 @@ None — server foundation wired; learning `notes/` added. Next: client API comm
 
 ## Database Changes
 
-None yet (no migrations). Optional PostgreSQL pool via `pg` when `DATABASE_URL` is set; skipped when unset.
+None yet for product tables. SQL scripts live in `server/sql/` (not in `src/`). `001_init_notes.sql` creates schema `pms` as a placeholder.
 
 ## Security Decisions
 
@@ -67,6 +68,7 @@ None yet (no migrations). Optional PostgreSQL pool via `pg` when `DATABASE_URL` 
 - OTP, passwords, tokens, card and KYC data must never be logged or stored in plain form.
 - Approval required for auth, payment and destructive schema changes.
 - API errors never return stack traces or secrets to clients in production.
+- Phase 1 client auth stub uses tab `sessionStorage` only — not a real session; never treat as production auth.
 
 ## UI Decisions
 
@@ -95,15 +97,14 @@ None tracked yet.
 
 ## Next Tasks
 
-1. Client API communication layer (`VITE_API_URL`).
-2. Routing + auth placeholder shell.
-3. Migrate or mirror `Docs/` content into `documentation/` feature/architecture files.
-4. Implement authentication feature with docs + tests per handbook.
+1. Implement authentication feature (OTP) with `documentation/features/authentication.md` + tests per handbook.
+2. Migrate or mirror `Docs/` content into `documentation/` feature/architecture files.
 
 ## Important Documentation Links
 
 - `README.md` — project overview and quick start (keep updated)
 - `notes/` — easy learning notes for foundation concepts (human study aid)
+- `documentation/database/` — DB docs; runnable SQL in `server/sql/`
 - `documentation/ai-engineering-handbook.md` — AI operating manual
 - `documentation/ui/design.md` — UI design system (palette, type, assets)
 - `documentation/features/api-response-foundation.md` — API success/error envelope
@@ -113,4 +114,4 @@ None tracked yet.
 
 ## Last Updated
 
-2026-07-23 (learning notes/ folder added)
+2026-07-23 (routing + auth placeholder shell)

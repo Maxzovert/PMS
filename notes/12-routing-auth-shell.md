@@ -1,42 +1,47 @@
-# 12 — Coming next: routing and auth placeholder
+# 12 — Routing and auth placeholder shell
 
-**Status:** Not built yet.
+**Status:** Built (Phase 1 foundation)  
+**Code:** `client/src/routes/`, `client/src/pages/`, `client/src/layouts/`, `client/src/auth/`
 
 ---
 
 ## 1. What is routing?
 
-Routing means: **which screen shows for which URL**.
+Routing picks **which screen** shows for a URL.
 
-Examples later:
+| Path | Screen |
+|------|--------|
+| `/` | Redirect to `/dashboard` or `/login` |
+| `/login` | Login placeholder |
+| `/dashboard` | Dashboard placeholder (protected) |
+| anything else | Not found |
 
-- `/login` → login page  
-- `/dashboard` → owner home  
-
-Today there is basically one screen in `App.jsx`.
-
----
-
-## 2. What is an auth placeholder?
-
-Phase 1 does **not** mean full OTP login yet.
-
-It means empty frames:
-
-- a login route/page shell  
-- maybe a “must be logged in” wrapper that will check a session later  
-
-Real OTP / SMS comes in the Authentication feature phase, with docs and tests.
+Library: `react-router-dom`.
 
 ---
 
-## 3. Why placeholder first?
+## 2. What is the auth placeholder?
 
-So when auth work starts, we already have:
+**Not** real OTP/SMS/JWT.
 
-- places to put screens  
-- API helper ready  
-- shared layout patterns  
+It is a door frame:
+
+- `AuthContext` — `isAuthenticated` stub (sessionStorage flag for this tab only)
+- `ProtectedRoute` — sends you to `/login` if the stub says “not signed in”
+- Login page — disabled phone/OTP fields + **Continue to dashboard (dev stub)** button
+- Sign out clears the stub and returns you to login
+
+Real Authentication is a later phase with docs + server APIs.
+
+---
+
+## 3. How to try it
+
+1. Open http://localhost:5173 → should land on `/login`
+2. Click **Continue to dashboard (dev stub)**
+3. See dashboard + API health
+4. Click **Sign out** → back to login
+5. Visit `/dashboard` while signed out → redirected to `/login`
 
 ---
 

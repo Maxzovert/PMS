@@ -56,8 +56,21 @@ Helpers: `sendSuccess` in `server/src/common/response.js`.
 
 No schema or migrations in this change.
 
+## Client usage
+
+The React app calls the API through `client/src/api/`:
+
+- Base URL: `VITE_API_BASE_URL`
+- Sends `X-Request-Id`
+- Success → `{ data, message, requestId }`
+- Failure → throws `ApiError` with `code`, `message`, `requestId`
+
+Scaffold smoke check: `getHealth()` from `App.jsx`.
+
 ## Change history
 
 | Date | Change |
 |------|--------|
 | 2026-07-23 | Initial logger, error middleware, request IDs, optional `pg` pool |
+| 2026-07-23 | Client API layer (`client/src/api`) + health smoke check |
+

@@ -1,60 +1,85 @@
-# 11 — Coming next: client API layer
+# 11 — Client API layer
 
-**Status:** Not built yet.
-
----
-
-## 1. What will this be?
-
-A small helper in the **client** that calls the **server** using `fetch` (or similar).
-
-Today:
-
-- client runs on 5173  
-- server runs on 3000  
-- they do not talk from the UI yet  
-
-Next:
-
-- client helper uses `VITE_API_BASE_URL`  
-- calls endpoints like `/health`  
-- understands success/error JSON envelopes  
+**Status:** Built (Phase 1 foundation)  
+**Code:** `client/src/api/`
 
 ---
 
-## 2. Why do we need it?
+## 1. What is this?
 
-Without one shared helper, every screen would invent its own fetch code and error handling.
-
-With one helper:
-
-- same base URL  
-- same headers (`X-Request-Id` later)  
-- same way to read `success` / `error`  
-
----
-
-## 3. How it will likely work (planned)
+A small helper so React screens call the Express API in **one consistent way**.
 
 ```text
 React screen
-  → api.get('/health')
+  → getHealth() / apiGet('/health')
   → http://localhost:3000/health
-  → parse JSON
-  → if success: return data
-  → if failure: throw/show error.message
+  → reads { success, data, message, requestId }
+  → or throws ApiError from { success: false, error: {...} }
 ```
 
 ---
 
-## 4. What it is not
+## 2. Why?
 
-- Not direct database access from the browser  
-- Not authentication yet  
-- Not storing responses in DB  
+Without this, every page would invent its own `fetch`, URL, and error handling.
+
+With it:
+
+- one base URL from `VITE_API_BASE_URL`
+- sends `X-Request-Id`
+- understands success/error envelopes from the server
 
 ---
 
-## 5. Mental picture
+## 3. Files in this project
+
+| File | Job |
+|------|-----|
+| `api/client.js` | `apiRequest`, `apiGet`, `apiPost`, … |
+| `api/errors.js` | `ApiError` |
+| `api/health.js` | `getHealth()` for `GET /health` |
+| `api/index.js` | re-exports |
+
+`App.jsx` uses `getHealth()` on load to show API status (smoke test).
+
+---
+
+## 4. Config
+
+`client/.env`:
+
+```text
+VITE_API_BASE_URL=http://localhost:3000
+```
+
+Restart Vite after changing `.env`.
+
+---
+
+## 5. How to call later features
+
+```js
+import { apiPost, ApiError } from '@/api';
+
+try {
+  const { data } = await apiPost('/v1/pms/something', { foo: 1 });
+} catch (err) {
+  if (err instanceof ApiError) {
+    // err.message, err.code, err.requestId
+  }
+}
+```
+
+---
+
+## 6. What it is not
+
+- Not database access from the browser  
+- Not login/OTP yet  
+- Not saving responses in DB  
+
+---
+
+## 7. Mental picture
 
 > API layer = waiter between dining room (React) and kitchen (Express).

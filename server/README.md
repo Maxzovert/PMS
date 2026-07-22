@@ -19,7 +19,15 @@ Health check: http://localhost:3000/health
 |---------|-------------|
 | `npm run dev` | Start API with file watch reload |
 | `npm start` | Start API |
-| `npm run db:ensure` | Create the `DATABASE_URL` database if missing (local) |
+| `npm run db:sql` | Run numbered `sql/*.sql` files (except `000_`) against `DATABASE_URL` |
+| `npm run db:sql -- sql/000_create_database.sql --admin` | Create DB via SQL file (connects to `postgres`) |
+
+## SQL scripts
+
+Schema and DB setup SQL live in [`sql/`](sql/README.md) as `.sql` files — **not** inside `src/` application code.
+
+See also [`documentation/database/`](../documentation/database/README.md).
+
 
 ## Environment
 
@@ -38,7 +46,7 @@ Never commit real credentials. Use `.env` locally; only `.env.example` in git.
 - **Request IDs:** `X-Request-Id` header (accepted or generated as `req_<uuid>`).
 - **Success envelope:** `{ success, data, message, requestId }`
 - **Error envelope:** `{ success: false, error: { code, message, requestId } }`
-- **Database:** `pg` pool created only when `DATABASE_URL` is set; `/health` reports `database` status.
+- **Database:** `pg` pool when `DATABASE_URL` is set; schema/SQL files in `sql/`
 
 ## Modules
 

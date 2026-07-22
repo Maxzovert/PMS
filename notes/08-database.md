@@ -1,10 +1,12 @@
 # 08 — Database — PostgreSQL connection
 
-**Code files:**
+**Code / SQL files:**
 
-- `server/src/database/index.js`  
-- `server/scripts/ensure-db.js`  
+- `server/src/database/index.js` — connection pool only (no schema SQL in JS)
+- `server/sql/*.sql` — queries/schema you run in the database
+- `server/scripts/run-sql.js` — optional helper that reads those files
 - npm package: `pg`
+
 
 ---
 
@@ -67,14 +69,14 @@ DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/parkar
 }
 ```
 
-### Helper script
+### Helper: run SQL files (not embedded queries)
 
 ```bash
-npm run db:ensure
+npm run db:sql -- sql/000_create_database.sql --admin
+npm run db:sql
 ```
 
-Creates the database name from the URL if it does not exist  
-(example problem you hit: database `"parkar"` did not exist).
+SQL text lives in `server/sql/`. See [14-sql-files.md](14-sql-files.md).
 
 ---
 

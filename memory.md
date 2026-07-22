@@ -35,7 +35,7 @@ None — server foundation wired; learning `notes/` added. Next: client API comm
 - 2026-07-23: Client converted from TypeScript/TSX to JavaScript/JSX (Vite, no `tsc`).
 - 2026-07-23: Migrated fonts/assets into `client/src/assets`; wired CSS design tokens + `@font-face` in `client/src/index.css`; favicon from PMS logo.
 - 2026-07-23: Server foundation — JSON logger, request IDs, AppError + error middleware, success envelope, optional `pg` pool from `DATABASE_URL`, `/health` reports DB status.
-- 2026-07-23: Rewrote `notes/` in plain-language teaching style (what/why/how-in-this-project).
+- 2026-07-23: Moved DB SQL into `server/sql/*.sql`; removed embedded ensure-db queries; added `npm run db:sql` file runner.
 
 ## Feature Status
 
@@ -58,7 +58,7 @@ None — server foundation wired; learning `notes/` added. Next: client API comm
 
 ## Database Changes
 
-None yet (no migrations). Optional PostgreSQL pool via `pg` when `DATABASE_URL` is set; skipped when unset.
+None yet for product tables. SQL scripts live in `server/sql/` (not in `src/`). `001_init_notes.sql` creates schema `pms` as a placeholder.
 
 ## Security Decisions
 
@@ -104,6 +104,7 @@ None tracked yet.
 
 - `README.md` — project overview and quick start (keep updated)
 - `notes/` — easy learning notes for foundation concepts (human study aid)
+- `documentation/database/` — DB docs; runnable SQL in `server/sql/`
 - `documentation/ai-engineering-handbook.md` — AI operating manual
 - `documentation/ui/design.md` — UI design system (palette, type, assets)
 - `documentation/features/api-response-foundation.md` — API success/error envelope

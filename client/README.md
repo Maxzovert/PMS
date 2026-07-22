@@ -1,11 +1,11 @@
 # PARKAR PMS Frontend
 
-React + Vite + TypeScript app for the parking owner portal.
+React + Vite + JavaScript (JSX) app for the parking owner portal.
 
 ## Setup
 
 ```bash
-cd frontend
+cd client
 npm install
 cp .env.example .env
 npm run dev
@@ -18,7 +18,7 @@ App: http://localhost:5173
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Start Vite dev server |
-| `npm run build` | Typecheck + production build |
+| `npm run build` | Production build |
 | `npm run preview` | Preview production build |
 
 ## Structure

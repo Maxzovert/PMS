@@ -14,8 +14,8 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 
 | Area | State |
 |------|--------|
-| Frontend | React + Vite + TypeScript scaffold |
-| Backend | Node.js + Express + TypeScript scaffold + `GET /health` |
+| Frontend | React + Vite + JavaScript (JSX) scaffold (`client/`) |
+| Backend | Node.js + Express + JavaScript scaffold + `GET /health` (`server/`) |
 | Auth / bookings / payments | Documented only — not implemented |
 
 ---
@@ -24,8 +24,8 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 
 | Layer | Choice |
 |-------|--------|
-| Frontend | React, Vite, TypeScript |
-| Backend | Node.js, Express, TypeScript |
+| Frontend | React, Vite, JavaScript (JSX) |
+| Backend | Node.js, Express, JavaScript |
 | Architecture | Modular monolith (shared backend with Driver App / Admin later) |
 | Database | PostgreSQL (planned — not wired yet) |
 
@@ -35,8 +35,8 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 
 ```text
 PMS/
-├── frontend/           # React owner portal
-├── backend/            # Express API
+├── client/             # React owner portal (JavaScript / JSX)
+├── server/             # Express API (JavaScript)
 ├── Docs/               # Product PRD, architecture, phases (legacy location)
 ├── documentation/      # AI handbook, UI design, feature docs
 ├── Assets/             # Staging logos & decorative assets
@@ -58,7 +58,7 @@ PMS/
 ### Frontend
 
 ```bash
-cd frontend
+cd client
 npm install
 cp .env.example .env
 npm run dev
@@ -69,7 +69,7 @@ npm run dev
 ### Backend
 
 ```bash
-cd backend
+cd server
 npm install
 cp .env.example .env
 npm run dev
@@ -85,7 +85,7 @@ npm run dev
 - Palette, typography, and assets: [`documentation/ui/design.md`](documentation/ui/design.md)
 - Primary `#34B17F` · Secondary `#0E3B35`
 - Brand font: Satoshi · UI font: Plus Jakarta Sans
-- Runtime UI assets must live under `frontend/src/assets` (staging copies are in `Assets/` / `Fonts/`)
+- Runtime UI assets must live under `client/src/assets` (staging copies are in `Assets/` / `Fonts/`)
 
 ---
 

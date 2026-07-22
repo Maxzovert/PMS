@@ -1,7 +1,7 @@
-import express from 'express';
-import cors from 'cors';
+const express = require('express');
+const cors = require('cors');
 
-export function createApp() {
+function createApp() {
   const app = express();
 
   app.use(cors());
@@ -17,3 +17,5 @@ export function createApp() {
 
   return app;
 }
+
+module.exports = { createApp };

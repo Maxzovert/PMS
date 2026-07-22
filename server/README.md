@@ -1,11 +1,11 @@
 # PARKAR PMS Backend
 
-Node.js + Express + TypeScript API (modular monolith).
+Node.js + Express + JavaScript API (modular monolith).
 
 ## Setup
 
 ```bash
-cd backend
+cd server
 npm install
 cp .env.example .env
 npm run dev
@@ -17,9 +17,8 @@ Health check: http://localhost:3000/health
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start API with hot reload (`tsx watch`) |
-| `npm run build` | Compile TypeScript to `dist/` |
-| `npm start` | Run compiled `dist/server.js` |
+| `npm run dev` | Start API with file watch reload |
+| `npm start` | Start API |
 
 ## Modules
 

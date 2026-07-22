@@ -18,8 +18,8 @@ None — Phase 1 app scaffolds ready. Next: wire fonts/assets, logging, DB place
 ## Current Architecture
 
 - Target: modular monolith (MVP), not microservices.
-- **Frontend:** `frontend/` — React + Vite + TypeScript (port 5173).
-- **Backend:** `backend/` — Node.js + Express + TypeScript (port 3000, `GET /health`).
+- **Frontend:** `client/` — React + Vite + JavaScript/JSX (port 5173).
+- **Backend:** `server/` — Node.js + Express + JavaScript (port 3000, `GET /health`).
 - Interfaces: Driver App, PARKAR PMS, Admin Dashboard — shared backend.
 - Source of product truth today: `Docs/prd.md`, `Docs/architecture.md`, `Docs/phases.md`.
 - Canonical AI/docs layout: `documentation/` (see handbook). Existing `Docs/` remains until migrated.
@@ -31,6 +31,8 @@ None — Phase 1 app scaffolds ready. Next: wire fonts/assets, logging, DB place
 - 2026-07-22: Initial UI design system doc (`documentation/ui/design.md`); palette locked; Satoshi + Plus Jakarta Sans fonts staged under `Fonts/`; pre-assets under `Assets/`.
 - 2026-07-22: Marketing/promotional composition rules added to `design.md` §5.1 (explicitly not whole-app).
 - 2026-07-22: Scaffolded `frontend/` (React/Vite) and `backend/` (Express); root `README.md` added.
+- 2026-07-23: Renamed apps to `client/` and `server/`; backend converted from TypeScript to plain JavaScript (no build step).
+- 2026-07-23: Client converted from TypeScript/TSX to JavaScript/JSX (Vite, no `tsc`).
 
 ## Feature Status
 
@@ -66,7 +68,7 @@ None yet (placeholder module only).
 - Design source of truth: `documentation/ui/design.md`.
 - Primary `#34B17F`; secondary `#0E3B35`; full palette documented in design.md.
 - Brand font: Satoshi (`Fonts/Satoshi_Complete/`); UI/body: Plus Jakarta Sans (`Fonts/Plus_Jakarta_Sans/`).
-- Staging assets in `Assets/`; runtime path is `frontend/src/assets` (migrate next).
+- Staging assets in `Assets/`; runtime path is `client/src/assets` (migrate next).
 - Support loading, empty, error, offline and success states.
 - Marketing/hero composition rules live in `design.md` §5.1 only — do not apply to operational PMS screens.
 
@@ -77,7 +79,7 @@ None tracked yet.
 ## Technical Debt
 
 - Product docs live in `Docs/`; AI handbook expects `documentation/`. Prefer updating both until a single tree is approved.
-- Fonts/assets still in staging folders; not yet copied into `frontend/src/assets`.
+- Fonts/assets still in staging folders; not yet copied into `client/src/assets`.
 
 ## Pending Founder Decisions
 
@@ -87,8 +89,8 @@ None tracked yet.
 
 ## Next Tasks
 
-1. Migrate staging `Assets/` / `Fonts/` into `frontend/src/assets` and wire design tokens.
-2. Add backend logging / consistent error format; prepare DB connection.
+1. Migrate staging `Assets/` / `Fonts/` into `client/src/assets` and wire design tokens.
+2. Add server logging / consistent error format; prepare DB connection.
 3. Migrate or mirror `Docs/` content into `documentation/` feature/architecture files.
 4. Implement authentication feature with docs + tests per handbook.
 
@@ -103,4 +105,4 @@ None tracked yet.
 
 ## Last Updated
 
-2026-07-22 (design.md §5.1 marketing scope)
+2026-07-23 (client JSX + server JS stack)

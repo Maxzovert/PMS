@@ -65,27 +65,44 @@
 
 ---
 
-## 5. Local ops reminders
+## 5. Deferred from Phase 3 — Parking registration
+
+| Item | Notes | Status |
+|------|-------|--------|
+| Map pin picker / Maps SDK | Manual lat/lng only in first slice | Open |
+| Photo uploads | Not in first onboarding slice | Open |
+| Full amenities set | Deferred | Open |
+| Ownership proof | Deferred | Open |
+| Admin approve → active | Submit stops at under_review | Open |
+| Overnight / special rates | Hourly + daily only | Open |
+| Holidays / temp closures | Simple open/close only | Open |
+
+**Shipped in first slice:** guided onboarding wizard (web + mobile), draft save, submit to `under_review`.
+
+---
+
+## 6. Local ops reminders
 
 | Item | Notes | Status |
 |------|-------|--------|
 | PostgreSQL running before SQL/auth/profile | Windows service may be Stopped | Recurring |
-| `cd server && npm run db:sql` after new SQL | Includes `004_owner_profiles.sql` | Recurring |
+| `cd server && npm run db:sql` after new SQL | Includes `005_parking_locations.sql` | Recurring |
 | Keep API terminal open | Ctrl+C stops server | Recurring |
 
 ---
 
-## 6. Next recommended product work
+## 7. Next recommended product work
 
-1. Apply SQL `004` if not yet (`npm run db:sql`).
-2. **Parking registration (Phase 3)** — next major feature.
+1. Apply SQL `005` (`npm run db:sql`) with Postgres up.
+2. Admin parking approval (after onboarding submit).
 3. When SMS vendor is chosen: replace mock OTP.
 
 ---
 
-## 7. Change history
+## 8. Change history
 
 | Date | Change |
 |------|--------|
 | 2026-07-23 | Created — SMS/DLT + foundation/auth gaps |
 | 2026-07-23 | Owner profile first slice shipped; KYC/bank listed as deferred |
+| 2026-07-23 | Parking onboarding first slice; Phase 3 deferrals listed |

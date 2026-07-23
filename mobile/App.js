@@ -10,6 +10,8 @@ import { SplashScreen } from './src/screens/SplashScreen';
 import { LoginScreen } from './src/screens/LoginScreen';
 import { DashboardScreen } from './src/screens/DashboardScreen';
 import { ProfileScreen } from './src/screens/ProfileScreen';
+import { ParkingListScreen } from './src/screens/ParkingListScreen';
+import { ParkingOnboardingScreen } from './src/screens/ParkingOnboardingScreen';
 import { colors } from './src/theme/colors';
 
 SplashScreenNative.preventAutoHideAsync().catch(() => {});
@@ -52,6 +54,16 @@ function RootNavigator() {
             name="Profile"
             component={ProfileScreen}
             options={{ title: 'Owner profile' }}
+          />
+          <Stack.Screen
+            name="ParkingList"
+            component={ParkingListScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ParkingOnboarding"
+            component={ParkingOnboardingScreen}
+            options={{ headerShown: false }}
           />
         </>
       ) : (

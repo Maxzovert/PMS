@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getHealth, ApiError } from '../api';
+import { Link } from 'react-router-dom';
+import { getHealth, listParkingLocations, ApiError } from '../api';
 import { useAuth } from '../auth/AuthContext';
 import noResult from '../assets/decor/states/no-result-found.svg';
 import { DecorMark, PageMotion } from '../components';
@@ -11,6 +12,7 @@ export function DashboardPage() {
     message: 'Checking API…',
     detail: null,
   });
+  const [parkingCount, setParkingCount] = useState(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -50,6 +52,14 @@ export function DashboardPage() {
         });
       });
 
+    listParkingLocations({ signal: controller.signal })
+      .then((result) => {
+        setParkingCount((result.data?.locations || []).length);
+      })
+      .catch(() => {
+        setParkingCount(null);
+      });
+
     return () => controller.abort();
   }, []);
 
@@ -74,8 +84,7 @@ export function DashboardPage() {
         Dashboard
       </h1>
       <p data-motion="body" className="mt-2 font-ui text-base text-muted">
-        Signed in as {user?.phone || 'owner'}. Bookings and earnings come in
-        later phases.
+        Signed in as {user?.phone || 'owner'}.
       </p>
 
       <div data-motion="form" className="mt-8 space-y-8">
@@ -104,12 +113,23 @@ export function DashboardPage() {
           />
           <div>
             <h2 className="font-brand text-xl font-semibold text-secondary">
-              No parking locations yet
+              {parkingCount === 0
+                ? 'No parking locations yet'
+                : parkingCount
+                  ? `${parkingCount} parking location${parkingCount === 1 ? '' : 's'}`
+                  : 'Your parkings'}
             </h2>
             <p className="mt-1 max-w-sm font-ui text-sm leading-relaxed text-muted">
-              Parking registration comes next. When you add a location, it will
-              show up here.
+              {parkingCount === 0
+                ? 'Start the guided onboarding to list your first location.'
+                : 'Manage drafts and submissions from Parking.'}
             </p>
+            <Link
+              to="/parking"
+              className="mt-4 inline-flex rounded-xl bg-primary px-4 py-2.5 font-ui text-sm font-semibold text-white no-underline"
+            >
+              {parkingCount === 0 ? 'Start onboarding' : 'Open parking'}
+            </Link>
           </div>
         </section>
       </div>

@@ -12,6 +12,7 @@ const {
 const { getDatabaseStatus } = require('./database');
 const { createAuthRouter } = require('./auth');
 const { createOwnersRouter } = require('./owners');
+const { createParkingRouter } = require('./parking');
 
 function createApp() {
   const app = express();
@@ -63,6 +64,7 @@ function createApp() {
 
   app.use('/auth', createAuthRouter());
   app.use('/owners', createOwnersRouter());
+  app.use('/parking', createParkingRouter());
 
   app.use(notFoundHandler);
   app.use(errorHandler);

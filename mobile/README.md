@@ -48,8 +48,10 @@ Same as web: mock OTP in server logs, or `DEV_OTP_FIXED=000000` in `server/.env`
 
 - Splash (branded cold start + native splash `#0E3B35`)
 - Login (centered brand, sparse decor, OTP form)
-- Dashboard (empty-state illustration)
+- Dashboard (CTA to parkings + profile)
 - Owner profile (GET/PATCH `/owners/me/profile`)
+- Parking list (GET `/parking/locations`; start/resume onboarding)
+- Parking onboarding wizard (Welcome → Basics → Location → Space → Pricing → Review/Submit)
 
 ## Auth difference vs web
 
@@ -58,8 +60,12 @@ Same as web: mock OTP in server logs, or `DEV_OTP_FIXED=000000` in `server/.env`
 | `client/` (web) | httpOnly cookie `parkar_session` |
 | `mobile/` (native) | `sessionToken` → SecureStore → `Authorization: Bearer` |
 
-Both use the same `/auth/*` and `/owners/*` routes.
+Both use the same `/auth/*`, `/owners/*`, and `/parking/*` routes.
 
 ## UI parity notes
 
-Web uses Tailwind v4 + GSAP. Mobile uses NativeWind + Reanimated for the same brand tokens, decor marks/waves, and staggered page entrance (respects Reduce Motion).
+Web uses Tailwind v4 + GSAP. Mobile uses NativeWind + Reanimated for brand tokens and decor; parking CTAs use `TouchableOpacity` + explicit StyleSheet colors (avoid NativeWind/`Pressable` opacity bugs).
+
+## Parking onboarding
+
+Same step model as web. Draft saves on Continue (`PATCH`); final Submit → `under_review`. See `documentation/features/parking-registration.md`.

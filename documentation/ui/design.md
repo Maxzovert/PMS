@@ -256,6 +256,7 @@ When designing those surfaces:
 - [x] Motion guidelines for PMS — GSAP `PageMotion`; 2–3 beats; reduced-motion off
 - [ ] Dark mode (out of scope unless approved)
 - [x] Expo NativeWind mirror of web look (login / dashboard / profile)
+- [x] Parking onboarding first viewport composition (web + mobile)
 
 ---
 
@@ -268,3 +269,4 @@ When designing those surfaces:
 | 2026-07-23 | Migrated fonts/assets into `client/src/assets`; CSS tokens + `@font-face` in `index.css` |
 | 2026-07-23 | Tailwind v4 + GSAP + decor components on web login, shell, dashboard, profile |
 | 2026-07-23 | Mobile NativeWind + Reanimated + decor parity (Expo SDK 54) |
+| 2026-07-23 | Parking onboarding wizard (web GSAP + mobile TouchableOpacity); decor on welcome/list |

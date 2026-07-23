@@ -9,25 +9,24 @@ PARKAR PMS is the parking-owner / operator portal for the PARKAR marketplace. Ow
 
 ## Current Phase
 
-Phase 2.3 complete. Web + mobile UI polish done. Next product: Parking registration (Phase 3).
+Phase 3 first slice complete — parking onboarding wizard (draft → under_review). Photos, map SDK, admin approval deferred.
 
 ## Active Task
 
-None — mobile splash + cleaned login/dashboard/profile UI.
+None — parking onboarding first slice shipped (web + mobile + API).
 
 ## Current Architecture
 
-- **Web:** `client/` — React + Vite + JSX; Tailwind v4; GSAP; decor.
-- **Mobile:** `mobile/` — Expo SDK 54; NativeWind + Reanimated; branded splash; cleaned login; decor used sparingly.
-- **Backend:** `server/` — Express; `/auth/*`, `/owners/me/profile`.
+- **Web:** `client/` — React + Vite + JSX; Tailwind v4; GSAP; parking list + onboarding wizard.
+- **Mobile:** `mobile/` — Expo SDK 54; parking list + onboarding (TouchableOpacity CTAs).
+- **Backend:** `server/` — Express; `/auth/*`, `/owners/me/profile`, `/parking/*`.
 
 ## Completed Work
 
 - Phase 1 foundation; Phase 2 auth OTP; owner profile.
 - 2026-07-23: Expo companion (SDK 54) + Bearer `sessionToken`.
-- 2026-07-23: Web UI — Tailwind v4 + GSAP + decor.
-- 2026-07-23: Mobile UI — NativeWind + Reanimated + decor (parity pass).
-- 2026-07-23: Mobile splash screen + cleaned login/dashboard/profile (less decor clutter).
+- 2026-07-23: Web + mobile UI polish.
+- 2026-07-23: Phase 3 parking onboarding — SQL `005`, `/parking` APIs, web/mobile wizards.
 
 ## Feature Status
 
@@ -35,24 +34,26 @@ None — mobile splash + cleaned login/dashboard/profile UI.
 |---------|--------|
 | Authentication / OTP | First slice (mock SMS); web cookie + mobile Bearer |
 | Owner profile | First slice (web + mobile; KYC/bank deferred) |
-| Web UI polish | Done (Tailwind + GSAP + decor) |
-| Mobile UI polish | Done (NativeWind + Reanimated + decor) |
-| Parking registration | Documented only |
+| Web UI polish | Done |
+| Mobile UI polish | Done |
+| Parking registration | First slice (onboarding wizard; draft → under_review) |
 
 ## Next Tasks
 
-1. Parking registration (Phase 3).
-2. KYC/bank profile sub-slice when ready.
-3. Real SMS/OTP provider when founder chooses vendor.
+1. Admin parking approval (`under_review` → `active`).
+2. Map SDK / photo uploads (deferred Phase 3 items).
+3. KYC/bank profile sub-slice when ready.
+4. Real SMS/OTP provider when founder chooses vendor.
 
 ## Important Documentation Links
 
+- `documentation/features/parking-registration.md`
 - `documentation/ui/design.md`
 - `mobile/README.md`
-- `documentation/features/mobile-companion.md`
 - `documentation/features/authentication.md`
 - `documentation/features/owner-profile.md`
+- `documentation/Docs/missed-during-development.md`
 
 ## Last Updated
 
-2026-07-23 (mobile splash + cleaned auth UI)
+2026-07-23 (Phase 3 parking onboarding first slice)

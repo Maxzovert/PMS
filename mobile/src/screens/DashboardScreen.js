@@ -101,7 +101,7 @@ export function DashboardScreen({ navigation }) {
                     textAlign: 'center',
                   }}
                 >
-                  No parking locations yet
+                  Ready to list parking
                 </Text>
                 <Text
                   style={{
@@ -113,8 +113,8 @@ export function DashboardScreen({ navigation }) {
                     maxWidth: 280,
                   }}
                 >
-                  Register your first location in the next phase. For now, keep
-                  your owner profile up to date.
+                  Guided onboarding walks you through basics, location, space,
+                  and pricing — then submit for review.
                 </Text>
                 <View style={{ marginTop: 14 }}>
                   <DecorWave
@@ -126,6 +126,10 @@ export function DashboardScreen({ navigation }) {
                 </View>
               </View>
 
+              <PrimaryButton
+                label="My parkings"
+                onPress={() => navigation.navigate('ParkingList')}
+              />
               <PrimaryButton
                 label="Owner profile"
                 onPress={() => navigation.navigate('Profile')}

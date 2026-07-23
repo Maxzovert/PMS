@@ -47,6 +47,19 @@ export function AppLayout() {
               Dashboard
             </NavLink>
             <NavLink
+              to="/parking"
+              className={({ isActive }) =>
+                [
+                  'rounded-lg px-3 py-2 font-ui text-sm font-medium no-underline transition',
+                  isActive
+                    ? 'bg-primary text-white'
+                    : 'text-surface/80 hover:bg-surface/10 hover:text-surface',
+                ].join(' ')
+              }
+            >
+              Parking
+            </NavLink>
+            <NavLink
               to="/profile"
               className={({ isActive }) =>
                 [
@@ -87,7 +100,7 @@ export function AppLayout() {
         className="pointer-events-none absolute top-28 right-6 w-24 opacity-15 md:w-32"
       />
 
-      <main className="relative z-10 mx-auto max-w-3xl px-5 py-8 sm:px-8 sm:py-10">
+      <main className="relative z-10 mx-auto max-w-4xl px-5 py-8 sm:px-8 sm:py-10">
         <Outlet />
       </main>
     </div>

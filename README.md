@@ -10,13 +10,13 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 
 ## Status
 
-**Phase 1 — Foundation** (scaffold + design tokens; features not yet)
+**Phase 3 — Parking onboarding** (first slice: draft → under_review)
 
 | Area | State |
 |------|--------|
-| Frontend | React + Vite + JSX; Tailwind v4 + GSAP; OTP login (`client/`); Expo mobile (`mobile/`) |
-| Backend | Express + JS; `/auth/*`, `/owners/*`, logger, errors, `pg`, SQL files (`server/`) |
-| Auth / bookings / payments | Auth OTP first slice; other features documented only |
+| Frontend | React + Vite + JSX; Tailwind v4 + GSAP; OTP login; parking list + onboarding (`client/`); Expo mobile (`mobile/`) |
+| Backend | Express + JS; `/auth/*`, `/owners/*`, `/parking/*`, logger, errors, `pg`, SQL files (`server/`) |
+| Auth / bookings / payments | Auth OTP + owner profile + parking draft/submit; bookings/payments later |
 
 ---
 

@@ -9,26 +9,25 @@ PARKAR PMS is the parking-owner / operator portal for the PARKAR marketplace. Ow
 
 ## Current Phase
 
-Phase 2.3 — Owner profile first slice done. Expo mobile companion scaffolded (auth + profile). Next product: Parking registration (Phase 3).
+Phase 2.3 complete. Web + mobile UI polish done. Next product: Parking registration (Phase 3).
 
 ## Active Task
 
-None — Expo `mobile/` first slice done. Web `client/` unchanged.
+None — mobile splash + cleaned login/dashboard/profile UI.
 
 ## Current Architecture
 
-- **Web:** `client/` — React + Vite + JSX; OTP login (cookie); `/profile`.
-- **Mobile:** `mobile/` — Expo SDK 54; OTP login (Bearer + SecureStore); dashboard + profile.
-- **Backend:** `server/` — Express; `/auth/*`, `/owners/me/profile`; SQL in `server/sql/`.
-- Product docs under `documentation/Docs/`.
-- Deferred checklist: `documentation/Docs/missed-during-development.md`.
+- **Web:** `client/` — React + Vite + JSX; Tailwind v4; GSAP; decor.
+- **Mobile:** `mobile/` — Expo SDK 54; NativeWind + Reanimated; branded splash; cleaned login; decor used sparingly.
+- **Backend:** `server/` — Express; `/auth/*`, `/owners/me/profile`.
 
 ## Completed Work
 
-- Phase 1 foundation (tokens, logging, errors, DB pool, API layer, routing).
-- Phase 2 auth OTP first slice (mock SMS).
-- 2026-07-23: Owner profile — `004_owner_profiles.sql`, `GET/PATCH /owners/me/profile`, `/profile` UI.
-- 2026-07-23: Expo `mobile/` companion — same API; `sessionToken` on verify for Bearer auth; locked to **Expo SDK 54**.
+- Phase 1 foundation; Phase 2 auth OTP; owner profile.
+- 2026-07-23: Expo companion (SDK 54) + Bearer `sessionToken`.
+- 2026-07-23: Web UI — Tailwind v4 + GSAP + decor.
+- 2026-07-23: Mobile UI — NativeWind + Reanimated + decor (parity pass).
+- 2026-07-23: Mobile splash screen + cleaned login/dashboard/profile (less decor clutter).
 
 ## Feature Status
 
@@ -36,47 +35,24 @@ None — Expo `mobile/` first slice done. Web `client/` unchanged.
 |---------|--------|
 | Authentication / OTP | First slice (mock SMS); web cookie + mobile Bearer |
 | Owner profile | First slice (web + mobile; KYC/bank deferred) |
+| Web UI polish | Done (Tailwind + GSAP + decor) |
+| Mobile UI polish | Done (NativeWind + Reanimated + decor) |
 | Parking registration | Documented only |
-| Availability / capacity | Documented only |
-| Booking management | Documented only |
-| Walk-in timer | Documented only |
-| Check-in / checkout | Documented only |
-| Payments and payouts | Documented only |
-| Reports | Documented only |
-
-## API Changes
-
-- Auth: `/auth/request-otp`, `/auth/verify-otp` (`user` + `sessionToken`), `/auth/me`, `/auth/logout`
-- Owners: `GET /owners/me/profile`, `PATCH /owners/me/profile`
-- Session: cookie `parkar_session` and/or `Authorization: Bearer`
-
-## Database Changes
-
-- `pms.users`, `otp_challenges`, `sessions`
-- `pms.owner_profiles` (`004_owner_profiles.sql`)
-
-## Security Decisions
-
-- Profile scoped to `req.user.id` only.
-- Owners cannot self-set `verified` / `suspended` profile status.
-- OTP still mocked until SMS provider chosen.
-- Native stores session token in SecureStore (not plain AsyncStorage).
 
 ## Next Tasks
 
 1. Parking registration (Phase 3).
-2. KYC/bank profile sub-slice when ready (see missed checklist).
+2. KYC/bank profile sub-slice when ready.
 3. Real SMS/OTP provider when founder chooses vendor.
 
 ## Important Documentation Links
 
+- `documentation/ui/design.md`
 - `mobile/README.md`
 - `documentation/features/mobile-companion.md`
-- `documentation/features/owner-profile.md`
 - `documentation/features/authentication.md`
-- `documentation/Docs/missed-during-development.md`
-- `notes/16-owner-profile.md`
+- `documentation/features/owner-profile.md`
 
 ## Last Updated
 
-2026-07-23 (Expo mobile companion first slice; web client kept as-is)
+2026-07-23 (mobile splash + cleaned auth UI)

@@ -1,3 +1,5 @@
+@import 'tailwindcss';
+
 /* Self-hosted fonts — see documentation/ui/design.md §3 */
 
 @font-face {
@@ -35,7 +37,6 @@
 }
 
 :root {
-  /* Brand colors — documentation/ui/design.md §2 */
   --color-primary: #34b17f;
   --color-secondary: #0e3b35;
   --color-secondary-deep: #042c21;
@@ -47,320 +48,49 @@
   --color-surface-elevated: #ffffff;
   --color-text-muted: #878d95;
   --color-text-on-primary: #ffffff;
-
-  /* Typography */
   --font-family-brand: 'Satoshi', system-ui, sans-serif;
   --font-family-ui: 'Plus Jakarta Sans', 'Satoshi', system-ui, sans-serif;
-
-  --font-size-display: 2.25rem;
-  --font-size-h1: 1.75rem;
-  --font-size-h2: 1.375rem;
-  --font-size-h3: 1.125rem;
-  --font-size-body: 1rem;
-  --font-size-body-sm: 0.875rem;
-  --font-size-caption: 0.75rem;
-
-  font-family: var(--font-family-ui);
-  line-height: 1.5;
-  font-weight: 400;
-  color: var(--color-secondary);
-  background-color: var(--color-surface);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
+@theme {
+  --color-primary: #34b17f;
+  --color-secondary: #0e3b35;
+  --color-secondary-deep: #042c21;
+  --color-surface: #f6f6f5;
+  --color-surface-muted: #e5f4ec;
+  --color-border: #878d95;
+  --color-warning: #fdca5e;
+  --color-accent-soft: #fddfe0;
+  --color-surface-elevated: #ffffff;
+  --color-muted: #878d95;
+  --font-brand: 'Satoshi', system-ui, sans-serif;
+  --font-ui: 'Plus Jakarta Sans', 'Satoshi', system-ui, sans-serif;
 }
 
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
 
-.app-shell {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 2rem;
-  min-height: 100vh;
-  background-color: var(--color-surface);
-}
+  html {
+    font-family: var(--font-family-ui);
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--color-secondary);
+    background-color: var(--color-surface);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-.app-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+  }
 
-.app-brand__mark {
-  width: 2.5rem;
-  height: 2.5rem;
-  object-fit: contain;
-}
-
-.app-brand__title {
-  margin: 0;
-  font-family: var(--font-family-brand);
-  font-size: var(--font-size-h1);
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--color-secondary);
-}
-
-.app-shell__tagline {
-  margin: 0;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-body);
-  color: var(--color-text-muted);
-}
-
-.app-shell__accent {
-  width: min(100%, 20rem);
-  height: auto;
-  margin-top: 0.5rem;
-}
-
-.app-health {
-  margin-top: 1.25rem;
-  padding: 0.875rem 1rem;
-  max-width: 28rem;
-  border: 1px solid color-mix(in srgb, var(--color-border) 45%, transparent);
-  background: var(--color-surface-elevated);
-}
-
-.app-health--loading {
-  border-color: color-mix(in srgb, var(--color-border) 45%, transparent);
-}
-
-.app-health--ok {
-  background: var(--color-surface-muted);
-  border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
-}
-
-.app-health--error {
-  background: var(--color-accent-soft);
-  border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
-}
-
-.app-health__label {
-  margin: 0 0 0.25rem;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-caption);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-}
-
-.app-health__message {
-  margin: 0;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-body-sm);
-  font-weight: 500;
-  color: var(--color-secondary);
-}
-
-.app-health__detail {
-  margin: 0.35rem 0 0;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-caption);
-  color: var(--color-text-muted);
-  word-break: break-all;
-}
-
-.layout {
-  min-height: 100vh;
-  background-color: var(--color-surface);
-  color: var(--color-secondary);
-}
-
-.layout__header {
-  padding: 1.25rem 1.5rem;
-}
-
-.layout__header--app {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  background: var(--color-secondary);
-  color: var(--color-surface);
-}
-
-.layout__nav {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.layout__nav-link {
-  color: color-mix(in srgb, var(--color-surface) 80%, transparent);
-  text-decoration: none;
-  font-size: var(--font-size-body-sm);
-  font-weight: 500;
-}
-
-.layout__nav-link--active,
-.layout__nav-link:hover {
-  color: var(--color-surface);
-  text-decoration: underline;
-}
-
-.layout__header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.layout__user-phone {
-  font-size: var(--font-size-caption);
-  opacity: 0.85;
-}
-
-.layout__header--app .app-brand__title {
-  font-size: var(--font-size-h3);
-  color: var(--color-surface);
-}
-
-.layout__main {
-  padding: 1.5rem;
-  max-width: 40rem;
-}
-
-.app-brand--link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.page__title {
-  margin: 0 0 0.5rem;
-  font-family: var(--font-family-brand);
-  font-size: var(--font-size-h1);
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--color-secondary);
-}
-
-.page__lead {
-  margin: 0 0 1.25rem;
-  font-size: var(--font-size-body);
-  color: var(--color-text-muted);
-}
-
-.page__note {
-  margin: 1.25rem 0 0.75rem;
-  font-size: var(--font-size-body-sm);
-  color: var(--color-text-muted);
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
-  max-width: 20rem;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  width: 100%;
-}
-
-.field__label {
-  font-size: var(--font-size-body-sm);
-  font-weight: 500;
-}
-
-.field__input {
-  width: 100%;
-  padding: 0.625rem 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--color-border) 55%, transparent);
-  background: var(--color-surface-elevated);
-  color: var(--color-secondary);
-  font: inherit;
-}
-
-.field__input:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.625rem 1rem;
-  border: 1px solid transparent;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-body-sm);
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.btn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-.btn--primary {
-  background: var(--color-primary);
-  color: var(--color-text-on-primary);
-}
-
-.btn--secondary {
-  background: var(--color-secondary);
-  color: var(--color-surface);
-}
-
-.btn--ghost {
-  background: transparent;
-  border-color: color-mix(in srgb, var(--color-surface) 35%, transparent);
-  color: var(--color-surface);
-}
-
-.btn--ghost-dark {
-  background: transparent;
-  border-color: color-mix(in srgb, var(--color-border) 55%, transparent);
-  color: var(--color-secondary);
-}
-
-.layout__header--app .btn--ghost:hover {
-  background: color-mix(in srgb, var(--color-surface) 12%, transparent);
-}
-
-.page__error {
-  margin: 1rem 0 0;
-  font-size: var(--font-size-body-sm);
-  color: var(--color-secondary-deep);
-  background: var(--color-accent-soft);
-  padding: 0.75rem 0.875rem;
-  max-width: 28rem;
-}
-
-.profile-meta {
-  margin: 0 0 1.25rem;
-  font-size: var(--font-size-body-sm);
-  color: var(--color-text-muted);
-}
-
-.profile-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-width: 36rem;
-}
-
-.profile-form__row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
-  gap: 0.75rem;
+  #root {
+    min-height: 100vh;
+  }
 }

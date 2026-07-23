@@ -3,14 +3,14 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
-  StyleSheet,
   Text,
-  TextInput,
   View,
 } from 'react-native';
 import { getOwnerProfile, updateOwnerProfile, ApiError } from '../api';
+import { Field } from '../components/Field';
+import { PrimaryButton } from '../components/PrimaryButton';
+import { PageMotion } from '../components/PageMotion';
 import { colors } from '../theme/colors';
 
 const EMPTY = {
@@ -41,7 +41,7 @@ function profileToForm(profile) {
 
 const FIELDS = [
   { key: 'fullName', label: 'Full name' },
-  { key: 'email', label: 'Email', keyboardType: 'email-address' },
+  { key: 'email', label: 'Email', keyboardType: 'email-address', autoCapitalize: 'none' },
   { key: 'businessName', label: 'Business name' },
   { key: 'businessType', label: 'Business type' },
   { key: 'addressLine1', label: 'Address line 1' },
@@ -115,148 +115,144 @@ export function ProfileScreen() {
 
   if (loading) {
     return (
-      <View style={styles.centered}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: colors.surface,
+          gap: 12,
+        }}
+      >
         <ActivityIndicator color={colors.primary} size="large" />
-        <Text style={styles.lead}>Loading profile…</Text>
+        <Text style={{ color: colors.textMuted }}>Loading profile…</Text>
       </View>
     );
   }
 
   return (
     <KeyboardAvoidingView
-      style={styles.root}
+      style={{ flex: 1, backgroundColor: colors.surface }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView
-        contentContainerStyle={styles.content}
+        style={{ flex: 1 }}
+        contentContainerStyle={{ padding: 24, paddingBottom: 40 }}
         keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.title}>Owner profile</Text>
-        <Text style={styles.lead}>
-          Personal and business details. KYC and bank details come later.
-        </Text>
-        <Text style={styles.meta}>
-          Phone: {phone || '—'} · Status: {status}
-        </Text>
+        <PageMotion
+          title={
+            <Text
+              style={{
+                fontSize: 28,
+                fontWeight: '700',
+                color: colors.secondaryDeep,
+              }}
+            >
+              Owner profile
+            </Text>
+          }
+          body={
+            <View>
+              <Text
+                style={{
+                  marginTop: 8,
+                  fontSize: 15,
+                  lineHeight: 22,
+                  color: colors.textMuted,
+                }}
+              >
+                Personal and business details.
+              </Text>
+              <View
+                style={{
+                  marginTop: 16,
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  gap: 8,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: colors.surfaceMuted,
+                    paddingHorizontal: 12,
+                    paddingVertical: 8,
+                    borderRadius: 999,
+                  }}
+                >
+                  <Text style={{ fontSize: 13, color: colors.secondary }}>
+                    {phone || 'No phone'}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: colors.surfaceMuted,
+                    paddingHorizontal: 12,
+                    paddingVertical: 8,
+                    borderRadius: 999,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      color: colors.secondary,
+                      textTransform: 'capitalize',
+                    }}
+                  >
+                    {status}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          }
+          form={
+            <View style={{ marginTop: 28, gap: 16 }}>
+              {FIELDS.map((field) => (
+                <Field
+                  key={field.key}
+                  label={field.label}
+                  value={form[field.key]}
+                  onChangeText={(value) => updateField(field.key, value)}
+                  keyboardType={field.keyboardType || 'default'}
+                  autoCapitalize={field.autoCapitalize || 'sentences'}
+                  editable={!saving}
+                />
+              ))}
 
-        {FIELDS.map((field) => (
-          <View key={field.key} style={styles.field}>
-            <Text style={styles.label}>{field.label}</Text>
-            <TextInput
-              style={styles.input}
-              value={form[field.key]}
-              onChangeText={(value) => updateField(field.key, value)}
-              keyboardType={field.keyboardType || 'default'}
-              autoCapitalize={
-                field.key === 'email' ? 'none' : 'sentences'
-              }
-              editable={!saving}
-              placeholderTextColor={colors.textMuted}
-            />
-          </View>
-        ))}
+              <View style={{ marginTop: 8 }}>
+                <PrimaryButton
+                  label={saving ? 'Saving…' : 'Save profile'}
+                  onPress={handleSave}
+                  busy={saving}
+                />
+              </View>
 
-        <Pressable
-          style={[styles.button, saving && styles.buttonDisabled]}
-          onPress={handleSave}
-          disabled={saving}
-        >
-          {saving ? (
-            <ActivityIndicator color={colors.white} />
-          ) : (
-            <Text style={styles.buttonText}>Save profile</Text>
-          )}
-        </Pressable>
-
-        {message ? <Text style={styles.note}>{message}</Text> : null}
-        {error ? (
-          <Text style={styles.error} accessibilityRole="alert">
-            {error}
-          </Text>
-        ) : null}
+              {message ? (
+                <Text style={{ fontSize: 14, color: colors.primary }}>
+                  {message}
+                </Text>
+              ) : null}
+              {error ? (
+                <Text
+                  accessibilityRole="alert"
+                  style={{
+                    fontSize: 13,
+                    lineHeight: 19,
+                    color: colors.secondaryDeep,
+                    backgroundColor: colors.errorSoft,
+                    paddingHorizontal: 14,
+                    paddingVertical: 12,
+                    borderRadius: 12,
+                  }}
+                >
+                  {error}
+                </Text>
+              ) : null}
+            </View>
+          }
+        />
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: colors.surface,
-  },
-  centered: {
-    flex: 1,
-    backgroundColor: colors.surface,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 12,
-  },
-  content: {
-    padding: 24,
-    paddingBottom: 48,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: colors.secondaryDeep,
-    marginBottom: 8,
-  },
-  lead: {
-    fontSize: 15,
-    lineHeight: 22,
-    color: colors.textMuted,
-    marginBottom: 12,
-  },
-  meta: {
-    fontSize: 14,
-    color: colors.secondary,
-    marginBottom: 20,
-  },
-  field: {
-    marginBottom: 14,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: colors.secondary,
-    marginBottom: 6,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 16,
-    color: colors.secondaryDeep,
-    backgroundColor: colors.white,
-  },
-  button: {
-    backgroundColor: colors.primary,
-    borderRadius: 10,
-    paddingVertical: 14,
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  buttonDisabled: {
-    opacity: 0.7,
-  },
-  buttonText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  note: {
-    marginTop: 16,
-    fontSize: 14,
-    color: colors.primary,
-  },
-  error: {
-    marginTop: 16,
-    padding: 12,
-    borderRadius: 8,
-    backgroundColor: colors.errorSoft,
-    color: colors.error,
-    fontSize: 14,
-  },
-});

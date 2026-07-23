@@ -239,8 +239,11 @@ When designing those surfaces:
 
 1. Fonts are self-hosted under `client/src/assets/fonts/` (Satoshi variable woff2; Plus Jakarta Sans variable TTF). Wired via `@font-face` in `client/src/index.css`.
 2. Images/SVGs live under `client/src/assets/` — reference only from there (not from staging `Assets/`).
-3. Design tokens are CSS variables in `client/src/index.css` matching §2–§3 (theme object can follow later).
-4. Do not load Google Fonts from a CDN — self-hosting is the standard.
+3. Design tokens are CSS variables in `client/src/index.css` and mapped into Tailwind v4 via `@theme` (`bg-primary`, `font-brand`, `text-muted`, etc.).
+4. Styling: **Tailwind CSS v4** (`@tailwindcss/vite`). Prefer utilities on screens; keep brand tokens in CSS/`@theme`.
+5. Motion: **GSAP** + `@gsap/react` via `PageMotion` (`data-motion="brand|title|body|form|decor"`). Respect `prefers-reduced-motion`.
+6. Decor helpers: `client/src/components/DecorMark.jsx`, `DecorWave.jsx` — import assets only from `client/src/assets/decor/`.
+7. Do not load Google Fonts from a CDN — self-hosting is the standard.
 
 ---
 
@@ -249,9 +252,10 @@ When designing those surfaces:
 - [ ] Full logo lockups (wordmark, dark/light variants)
 - [ ] Icon set decision and folder under `client/src/assets`
 - [ ] Component library (button, input, table, badge, toast) specs
-- [ ] Spacing / radius / elevation scale
-- [ ] Motion guidelines for PMS (subtle, operational — not marketing-heavy)
+- [x] Spacing / radius / elevation scale — started via Tailwind utilities on login/app shell
+- [x] Motion guidelines for PMS — GSAP `PageMotion`; 2–3 beats; reduced-motion off
 - [ ] Dark mode (out of scope unless approved)
+- [x] Expo NativeWind mirror of web look (login / dashboard / profile)
 
 ---
 
@@ -262,3 +266,5 @@ When designing those surfaces:
 | 2026-07-22 | Initial design.md: palette, Satoshi + Plus Jakarta Sans, asset inventory |
 | 2026-07-22 | Scoped marketing/promotional composition rules to §5.1 — not whole-app PMS UI |
 | 2026-07-23 | Migrated fonts/assets into `client/src/assets`; CSS tokens + `@font-face` in `index.css` |
+| 2026-07-23 | Tailwind v4 + GSAP + decor components on web login, shell, dashboard, profile |
+| 2026-07-23 | Mobile NativeWind + Reanimated + decor parity (Expo SDK 54) |

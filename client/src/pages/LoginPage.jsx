@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { requestOtp, verifyOtp, ApiError } from '../api';
 import { useAuth } from '../auth/AuthContext';
+import { DecorMark, PageMotion } from '../components';
 
 export function LoginPage() {
   const { isAuthenticated, bootstrapping, setSessionUser } = useAuth();
@@ -16,8 +17,8 @@ export function LoginPage() {
 
   if (bootstrapping) {
     return (
-      <section className="page page--login">
-        <p className="page__lead">Checking session…</p>
+      <section className="max-w-md">
+        <p className="font-ui text-muted">Checking session…</p>
       </section>
     );
   }
@@ -64,77 +65,107 @@ export function LoginPage() {
   }
 
   return (
-    <section className="page page--login">
-      <h1 className="page__title">Sign in</h1>
-      <p className="page__lead">
+    <PageMotion className="relative max-w-md" replayKey={step}>
+      <DecorMark
+        kind="star"
+        data-motion="decor"
+        className="mb-4 w-7 opacity-50"
+      />
+
+      <h1
+        data-motion="title"
+        className="font-brand text-3xl font-bold tracking-tight text-secondary md:text-4xl"
+      >
+        Sign in
+      </h1>
+      <p data-motion="body" className="mt-3 font-ui text-base leading-relaxed text-muted">
         Enter your mobile number to receive a one-time code. SMS is mocked in
         development until a provider is configured.
       </p>
 
-      {step === 'phone' ? (
-        <form className="login-form" onSubmit={handleRequestOtp}>
-          <label className="field">
-            <span className="field__label">Mobile number</span>
-            <input
-              className="field__input"
-              type="tel"
-              name="phone"
-              placeholder="+9198XXXXXXXX"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              autoComplete="tel"
-              required
+      <div data-motion="form" className="mt-8">
+        {step === 'phone' ? (
+          <form className="flex flex-col gap-4" onSubmit={handleRequestOtp}>
+            <label className="flex flex-col gap-1.5">
+              <span className="font-ui text-sm font-medium text-secondary">
+                Mobile number
+              </span>
+              <input
+                className="rounded-xl border border-border/55 bg-surface-elevated px-3.5 py-3 font-ui text-base text-secondary outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-65"
+                type="tel"
+                name="phone"
+                placeholder="+9198XXXXXXXX"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                autoComplete="tel"
+                required
+                disabled={busy}
+              />
+            </label>
+            <button
+              type="submit"
+              className="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-3 font-ui text-sm font-semibold text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-55"
               disabled={busy}
-            />
-          </label>
-          <button type="submit" className="btn btn--primary" disabled={busy}>
-            {busy ? 'Sending…' : 'Send OTP'}
-          </button>
-        </form>
-      ) : (
-        <form className="login-form" onSubmit={handleVerifyOtp}>
-          <label className="field">
-            <span className="field__label">Verification code</span>
-            <input
-              className="field__input"
-              type="text"
-              name="code"
-              inputMode="numeric"
-              pattern="\d{6}"
-              maxLength={6}
-              placeholder="6-digit code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              autoComplete="one-time-code"
-              required
+            >
+              {busy ? 'Sending…' : 'Send OTP'}
+            </button>
+          </form>
+        ) : (
+          <form className="flex flex-col gap-4" onSubmit={handleVerifyOtp}>
+            <label className="flex flex-col gap-1.5">
+              <span className="font-ui text-sm font-medium text-secondary">
+                Verification code
+              </span>
+              <input
+                className="rounded-xl border border-border/55 bg-surface-elevated px-3.5 py-3 font-ui text-base tracking-[0.2em] text-secondary outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-65"
+                type="text"
+                name="code"
+                inputMode="numeric"
+                pattern="\d{6}"
+                maxLength={6}
+                placeholder="6-digit code"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                autoComplete="one-time-code"
+                required
+                disabled={busy}
+              />
+            </label>
+            <button
+              type="submit"
+              className="inline-flex items-center justify-center rounded-xl bg-primary px-4 py-3 font-ui text-sm font-semibold text-white transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-55"
               disabled={busy}
-            />
-          </label>
-          <button type="submit" className="btn btn--primary" disabled={busy}>
-            {busy ? 'Verifying…' : 'Verify & sign in'}
-          </button>
-          <button
-            type="button"
-            className="btn btn--ghost-dark"
-            disabled={busy}
-            onClick={() => {
-              setStep('phone');
-              setCode('');
-              setError(null);
-              setInfo(null);
-            }}
-          >
-            Use a different number
-          </button>
-        </form>
-      )}
+            >
+              {busy ? 'Verifying…' : 'Verify & sign in'}
+            </button>
+            <button
+              type="button"
+              className="inline-flex items-center justify-center rounded-xl border border-border/55 bg-transparent px-4 py-3 font-ui text-sm font-medium text-secondary transition hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-55"
+              disabled={busy}
+              onClick={() => {
+                setStep('phone');
+                setCode('');
+                setError(null);
+                setInfo(null);
+              }}
+            >
+              Use a different number
+            </button>
+          </form>
+        )}
 
-      {info ? <p className="page__note">{info}</p> : null}
-      {error ? (
-        <p className="page__error" role="alert">
-          {error}
-        </p>
-      ) : null}
-    </section>
+        {info ? (
+          <p className="mt-5 font-ui text-sm leading-relaxed text-muted">{info}</p>
+        ) : null}
+        {error ? (
+          <p
+            className="mt-5 rounded-xl bg-accent-soft px-3.5 py-3 font-ui text-sm text-secondary-deep"
+            role="alert"
+          >
+            {error}
+          </p>
+        ) : null}
+      </div>
+    </PageMotion>
   );
 }

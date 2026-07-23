@@ -14,7 +14,7 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 
 | Area | State |
 |------|--------|
-| Frontend | React + Vite + JSX web portal (`client/`); Expo mobile companion (`mobile/`) |
+| Frontend | React + Vite + JSX; Tailwind v4 + GSAP; OTP login (`client/`); Expo mobile (`mobile/`) |
 | Backend | Express + JS; `/auth/*`, `/owners/*`, logger, errors, `pg`, SQL files (`server/`) |
 | Auth / bookings / payments | Auth OTP first slice; other features documented only |
 
@@ -24,7 +24,7 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 
 | Layer | Choice |
 |-------|--------|
-| Frontend (web) | React, Vite, JavaScript (JSX) — `client/` |
+| Frontend (web) | React, Vite, JSX, Tailwind v4, GSAP — `client/` |
 | Frontend (mobile) | Expo React Native, JavaScript — `mobile/` |
 | Backend | Node.js, Express, JavaScript |
 | Architecture | Modular monolith (shared backend with Driver App / Admin later) |

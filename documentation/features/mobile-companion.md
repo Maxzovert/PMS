@@ -19,6 +19,7 @@ Parking owners (same accounts as web).
 - Session via Bearer token in SecureStore (`sessionToken` from verify)
 - Dashboard placeholder
 - Owner profile GET/PATCH
+- NativeWind + Reanimated UI polish (brand tokens, decor SVGs, staggered motion)
 
 ## Out of Scope
 
@@ -26,6 +27,7 @@ Parking owners (same accounts as web).
 - Push notifications
 - Native maps / parking registration UI
 - Real SMS (still mock on server)
+- GSAP on native (use Reanimated instead)
 
 ## Flows
 
@@ -48,3 +50,5 @@ Same as web authentication and owner profile; see `authentication.md` and `owner
 |------|--------|
 | 2026-07-23 | First slice: Expo scaffold, auth, dashboard, profile |
 | 2026-07-23 | Locked to Expo SDK 54 |
+| 2026-07-23 | NativeWind + Reanimated + decor assets (web UI parity) |
+| 2026-07-23 | Splash screen; cleaned login/dashboard/profile layout |

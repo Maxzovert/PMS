@@ -1,18 +1,31 @@
 import { useState } from 'react';
 import {
   ActivityIndicator,
+  Image,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   ScrollView,
-  StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import { requestOtp, verifyOtp, ApiError } from '../api';
 import { useAuth } from '../auth/AuthContext';
-import { colors } from '../theme/colors';
+import logo from '../assets/logo/Pms_Icon.png';
+
+const C = {
+  primary: '#34B17F',
+  secondary: '#0E3B35',
+  secondaryDeep: '#042C21',
+  surface: '#F6F6F5',
+  white: '#FFFFFF',
+  muted: '#878D95',
+  errorSoft: '#FDDFE0',
+  border: 'rgba(135,141,149,0.35)',
+};
 
 export function LoginScreen() {
   const { completeLogin } = useAuth();
@@ -31,7 +44,7 @@ export function LoginScreen() {
       const result = await requestOtp(phone.trim());
       setStep('otp');
       setInfo(
-        `Code sent to ${result.data?.phone || phone}. In local/dev, check the server log for the mock OTP (or use DEV_OTP_FIXED).`,
+        `Code sent to ${result.data?.phone || phone}. Dev: check server log or use DEV_OTP_FIXED.`,
       );
     } catch (err) {
       setError(
@@ -61,179 +74,301 @@ export function LoginScreen() {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={styles.root}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <ScrollView
-        contentContainerStyle={styles.content}
-        keyboardShouldPersistTaps="handled"
-      >
-        <Text style={styles.brand}>PARKAR</Text>
-        <Text style={styles.title}>Sign in</Text>
-        <Text style={styles.lead}>
-          Enter your mobile number to receive a one-time code. SMS is mocked in
-          development until a provider is configured.
-        </Text>
+    <View style={{ flex: 1, backgroundColor: C.surface }}>
+      <StatusBar style="light" />
 
-        {step === 'phone' ? (
-          <View style={styles.form}>
-            <Text style={styles.label}>Mobile number</Text>
-            <TextInput
-              style={styles.input}
-              value={phone}
-              onChangeText={setPhone}
-              placeholder="+9198XXXXXXXX"
-              placeholderTextColor={colors.textMuted}
-              keyboardType="phone-pad"
-              autoComplete="tel"
-              editable={!busy}
+      <View style={{ backgroundColor: C.secondary }}>
+        <SafeAreaView edges={['top']}>
+          <View style={{ paddingHorizontal: 24, paddingTop: 16, paddingBottom: 24 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Image
+                source={logo}
+                style={{ width: 44, height: 44, marginRight: 12 }}
+                resizeMode="contain"
+              />
+              <View>
+                <Text
+                  style={{
+                    color: C.white,
+                    fontSize: 22,
+                    fontWeight: '700',
+                    letterSpacing: 1,
+                  }}
+                >
+                  PARKAR
+                </Text>
+                <Text
+                  style={{
+                    marginTop: 2,
+                    color: 'rgba(246,246,245,0.65)',
+                    fontSize: 11,
+                    fontWeight: '600',
+                    letterSpacing: 1.4,
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  Owner portal
+                </Text>
+              </View>
+            </View>
+            <View
+              style={{
+                marginTop: 18,
+                height: 3,
+                width: 40,
+                borderRadius: 2,
+                backgroundColor: C.primary,
+              }}
             />
-            <Pressable
-              style={[styles.button, busy && styles.buttonDisabled]}
-              onPress={handleRequestOtp}
-              disabled={busy}
-            >
-              {busy ? (
-                <ActivityIndicator color={colors.white} />
-              ) : (
-                <Text style={styles.buttonText}>Send OTP</Text>
-              )}
-            </Pressable>
           </View>
-        ) : (
-          <View style={styles.form}>
-            <Text style={styles.label}>Verification code</Text>
-            <TextInput
-              style={styles.input}
-              value={code}
-              onChangeText={setCode}
-              placeholder="6-digit code"
-              placeholderTextColor={colors.textMuted}
-              keyboardType="number-pad"
-              maxLength={6}
-              editable={!busy}
-            />
-            <Pressable
-              style={[styles.button, busy && styles.buttonDisabled]}
-              onPress={handleVerifyOtp}
-              disabled={busy}
-            >
-              {busy ? (
-                <ActivityIndicator color={colors.white} />
-              ) : (
-                <Text style={styles.buttonText}>Verify & sign in</Text>
-              )}
-            </Pressable>
-            <Pressable
-              style={styles.ghost}
-              disabled={busy}
-              onPress={() => {
-                setStep('phone');
-                setCode('');
-                setError(null);
-                setInfo(null);
+        </SafeAreaView>
+      </View>
+
+      <SafeAreaView style={{ flex: 1 }} edges={['bottom']}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{
+              paddingHorizontal: 24,
+              paddingTop: 28,
+              paddingBottom: 40,
+            }}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            <Text
+              style={{
+                fontSize: 26,
+                fontWeight: '700',
+                color: C.secondaryDeep,
               }}
             >
-              <Text style={styles.ghostText}>Use a different number</Text>
-            </Pressable>
-          </View>
-        )}
+              {step === 'phone' ? 'Sign in' : 'Verify code'}
+            </Text>
+            <Text
+              style={{
+                marginTop: 8,
+                marginBottom: 24,
+                fontSize: 15,
+                lineHeight: 22,
+                color: C.muted,
+              }}
+            >
+              {step === 'phone'
+                ? 'Enter your mobile number to receive a one-time password.'
+                : `Enter the 6-digit code sent to ${phone.trim() || 'your number'}.`}
+            </Text>
 
-        {info ? <Text style={styles.note}>{info}</Text> : null}
-        {error ? (
-          <Text style={styles.error} accessibilityRole="alert">
-            {error}
-          </Text>
-        ) : null}
-      </ScrollView>
-    </KeyboardAvoidingView>
+            <View
+              style={{
+                backgroundColor: C.white,
+                borderRadius: 18,
+                padding: 20,
+                borderWidth: 1,
+                borderColor: C.border,
+              }}
+            >
+              <Text
+                style={{
+                  marginBottom: 16,
+                  fontSize: 12,
+                  fontWeight: '600',
+                  color: C.muted,
+                }}
+              >
+                Step {step === 'phone' ? '1' : '2'} of 2
+              </Text>
+
+              {step === 'phone' ? (
+                <View>
+                  <Text
+                    style={{
+                      marginBottom: 8,
+                      fontSize: 13,
+                      fontWeight: '600',
+                      color: C.secondary,
+                    }}
+                  >
+                    Mobile number
+                  </Text>
+                  <TextInput
+                    value={phone}
+                    onChangeText={setPhone}
+                    placeholder="+9198XXXXXXXX"
+                    placeholderTextColor={C.muted}
+                    keyboardType="phone-pad"
+                    autoComplete="tel"
+                    editable={!busy}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: C.border,
+                      backgroundColor: C.white,
+                      borderRadius: 14,
+                      paddingHorizontal: 16,
+                      paddingVertical: 14,
+                      fontSize: 16,
+                      color: C.secondaryDeep,
+                      marginBottom: 16,
+                    }}
+                  />
+
+                  <TouchableOpacity
+                    activeOpacity={0.85}
+                    disabled={busy}
+                    onPress={handleRequestOtp}
+                    style={{
+                      backgroundColor: C.primary,
+                      borderRadius: 14,
+                      minHeight: 54,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      opacity: busy ? 0.75 : 1,
+                    }}
+                  >
+                    {busy ? (
+                      <ActivityIndicator color={C.white} />
+                    ) : (
+                      <Text
+                        style={{
+                          color: C.white,
+                          fontSize: 16,
+                          fontWeight: '700',
+                        }}
+                      >
+                        Continue
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View>
+                  <Text
+                    style={{
+                      marginBottom: 8,
+                      fontSize: 13,
+                      fontWeight: '600',
+                      color: C.secondary,
+                    }}
+                  >
+                    OTP code
+                  </Text>
+                  <TextInput
+                    value={code}
+                    onChangeText={setCode}
+                    placeholder="6-digit code"
+                    placeholderTextColor={C.muted}
+                    keyboardType="number-pad"
+                    maxLength={6}
+                    autoComplete="one-time-code"
+                    editable={!busy}
+                    style={{
+                      borderWidth: 1,
+                      borderColor: C.border,
+                      backgroundColor: C.white,
+                      borderRadius: 14,
+                      paddingHorizontal: 16,
+                      paddingVertical: 14,
+                      fontSize: 16,
+                      letterSpacing: 4,
+                      color: C.secondaryDeep,
+                      marginBottom: 16,
+                    }}
+                  />
+
+                  <TouchableOpacity
+                    activeOpacity={0.85}
+                    disabled={busy}
+                    onPress={handleVerifyOtp}
+                    style={{
+                      backgroundColor: C.primary,
+                      borderRadius: 14,
+                      minHeight: 54,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginBottom: 12,
+                      opacity: busy ? 0.75 : 1,
+                    }}
+                  >
+                    {busy ? (
+                      <ActivityIndicator color={C.white} />
+                    ) : (
+                      <Text
+                        style={{
+                          color: C.white,
+                          fontSize: 16,
+                          fontWeight: '700',
+                        }}
+                      >
+                        Sign in
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    disabled={busy}
+                    onPress={() => {
+                      setStep('phone');
+                      setCode('');
+                      setError(null);
+                      setInfo(null);
+                    }}
+                    style={{
+                      minHeight: 44,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: C.secondary,
+                        fontSize: 15,
+                        fontWeight: '600',
+                      }}
+                    >
+                      Change number
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              {info ? (
+                <Text
+                  style={{
+                    marginTop: 14,
+                    fontSize: 13,
+                    lineHeight: 18,
+                    color: C.muted,
+                  }}
+                >
+                  {info}
+                </Text>
+              ) : null}
+              {error ? (
+                <Text
+                  accessibilityRole="alert"
+                  style={{
+                    marginTop: 14,
+                    fontSize: 13,
+                    lineHeight: 18,
+                    color: C.secondaryDeep,
+                    backgroundColor: C.errorSoft,
+                    paddingHorizontal: 12,
+                    paddingVertical: 10,
+                    borderRadius: 10,
+                    overflow: 'hidden',
+                  }}
+                >
+                  {error}
+                </Text>
+              ) : null}
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: colors.surface,
-  },
-  content: {
-    flexGrow: 1,
-    padding: 24,
-    paddingTop: 72,
-  },
-  brand: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: colors.secondary,
-    letterSpacing: 1,
-    marginBottom: 24,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: colors.secondaryDeep,
-    marginBottom: 8,
-  },
-  lead: {
-    fontSize: 15,
-    lineHeight: 22,
-    color: colors.textMuted,
-    marginBottom: 28,
-  },
-  form: {
-    gap: 12,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: colors.secondary,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    fontSize: 16,
-    color: colors.secondaryDeep,
-    backgroundColor: colors.white,
-  },
-  button: {
-    backgroundColor: colors.primary,
-    borderRadius: 10,
-    paddingVertical: 14,
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  buttonDisabled: {
-    opacity: 0.7,
-  },
-  buttonText: {
-    color: colors.white,
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  ghost: {
-    paddingVertical: 12,
-    alignItems: 'center',
-  },
-  ghostText: {
-    color: colors.secondary,
-    fontSize: 15,
-    fontWeight: '500',
-  },
-  note: {
-    marginTop: 20,
-    fontSize: 14,
-    lineHeight: 20,
-    color: colors.secondary,
-  },
-  error: {
-    marginTop: 16,
-    padding: 12,
-    borderRadius: 8,
-    backgroundColor: colors.errorSoft,
-    color: colors.error,
-    fontSize: 14,
-  },
-});

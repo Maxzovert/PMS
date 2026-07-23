@@ -48,6 +48,7 @@ This folder is only to help **you** understand.
 | 12 | [12-routing-auth-shell.md](12-routing-auth-shell.md) | React Router + login/dashboard stub (built) |
 | 14 | [14-sql-files.md](14-sql-files.md) | SQL lives in `server/sql/*.sql`, not in app code |
 | 15 | [15-authentication.md](15-authentication.md) | Mobile OTP login (Phase 2 first slice) |
+| 16 | [16-owner-profile.md](16-owner-profile.md) | Owner profile personal/business (2.3) |
 
 ---
 

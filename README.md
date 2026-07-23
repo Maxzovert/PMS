@@ -98,6 +98,7 @@ npm run dev
 | [`Docs/prd.md`](Docs/prd.md) | Product requirements |
 | [`Docs/architecture.md`](Docs/architecture.md) | Technical design |
 | [`Docs/phases.md`](Docs/phases.md) | Phased build plan |
+| [`Docs/missed-during-development.md`](Docs/missed-during-development.md) | Deferred / missed work checklist |
 | [`documentation/ai-engineering-handbook.md`](documentation/ai-engineering-handbook.md) | AI / contributor operating manual |
 | [`notes/`](notes/README.md) | Easy concept notes (logger, app.js, DB, …) |
 | [`AGENTS.md`](AGENTS.md) | Always-on AI rules |

@@ -53,7 +53,16 @@ Never commit real credentials. Use `.env` locally; only `.env.example` in git.
 | `GET` | `/auth/me` |
 | `POST` | `/auth/logout` |
 
-Session cookie: `parkar_session` (httpOnly). Mock OTP in development — see `documentation/features/authentication.md`.
+Session cookie: `parkar_session` (httpOnly). Mock OTP in development.
+
+## Owner profile (Phase 2.3 first slice)
+
+| Method | Path |
+|--------|------|
+| `GET` | `/owners/me/profile` |
+| `PATCH` | `/owners/me/profile` |
+
+SQL: `sql/004_owner_profiles.sql`. KYC/bank deferred.
 
 ## Foundation behavior
 

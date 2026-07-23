@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import pmsIcon from '../assets/logo/Pms_Icon.png';
 import { useAuth } from '../auth/AuthContext';
 
@@ -14,7 +14,7 @@ export function AppLayout() {
   return (
     <div className="layout layout--app">
       <header className="layout__header layout__header--app">
-        <Link to="/dashboard" className="app-brand app-brand--link">
+        <NavLink to="/dashboard" className="app-brand app-brand--link">
           <img
             className="app-brand__mark"
             src={pmsIcon}
@@ -23,7 +23,25 @@ export function AppLayout() {
             height={40}
           />
           <span className="app-brand__title">PARKAR PMS</span>
-        </Link>
+        </NavLink>
+        <nav className="layout__nav" aria-label="Main">
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              isActive ? 'layout__nav-link layout__nav-link--active' : 'layout__nav-link'
+            }
+          >
+            Dashboard
+          </NavLink>
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              isActive ? 'layout__nav-link layout__nav-link--active' : 'layout__nav-link'
+            }
+          >
+            Profile
+          </NavLink>
+        </nav>
         <div className="layout__header-actions">
           {user?.phone ? (
             <span className="layout__user-phone">{user.phone}</span>

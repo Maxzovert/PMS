@@ -11,6 +11,7 @@ const {
 } = require('./common');
 const { getDatabaseStatus } = require('./database');
 const { createAuthRouter } = require('./auth');
+const { createOwnersRouter } = require('./owners');
 
 function createApp() {
   const app = express();
@@ -61,6 +62,7 @@ function createApp() {
   );
 
   app.use('/auth', createAuthRouter());
+  app.use('/owners', createOwnersRouter());
 
   app.use(notFoundHandler);
   app.use(errorHandler);

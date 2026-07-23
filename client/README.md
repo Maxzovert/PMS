@@ -30,6 +30,7 @@ API base URL must point at the running server (`VITE_API_BASE_URL`, default `htt
 | `/` | Redirect to login or dashboard |
 | `/login` | Mobile + OTP sign-in |
 | `/dashboard` | Protected home + API health |
+| `/profile` | Owner personal/business profile |
 | `*` | Not found |
 
 Auth uses httpOnly session cookie from the API (`credentials: 'include'`). In local/dev, OTP is mocked — use `DEV_OTP_FIXED` on the server or read the code from server logs.

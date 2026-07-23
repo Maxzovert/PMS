@@ -22,6 +22,7 @@ All queries/schema scripts live as files under:
 | `001_init_notes.sql` | Create `pms` schema placeholder |
 | `002_auth_users.sql` | `pms.users` |
 | `003_auth_otp_and_sessions.sql` | `pms.otp_challenges`, `pms.sessions` |
+| `004_owner_profiles.sql` | `pms.owner_profiles` (personal/business) |
 
 ## Connection
 

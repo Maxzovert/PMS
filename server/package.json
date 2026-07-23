@@ -8,9 +8,9 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "db:sql": "node scripts/run-sql.js",
-    "test": "node scripts/test-auth-unit.js && node scripts/test-auth.js",
-    "test:auth": "node scripts/test-auth.js",
-    "test:unit": "node scripts/test-auth-unit.js"
+    "test": "node scripts/test/test-auth-unit.js && node scripts/test/test-auth.js",
+    "test:auth": "node scripts/test/test-auth.js",
+    "test:unit": "node scripts/test/test-auth-unit.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.7",

@@ -188,8 +188,28 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  flex-wrap: wrap;
   background: var(--color-secondary);
   color: var(--color-surface);
+}
+
+.layout__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.layout__nav-link {
+  color: color-mix(in srgb, var(--color-surface) 80%, transparent);
+  text-decoration: none;
+  font-size: var(--font-size-body-sm);
+  font-weight: 500;
+}
+
+.layout__nav-link--active,
+.layout__nav-link:hover {
+  color: var(--color-surface);
+  text-decoration: underline;
 }
 
 .layout__header-actions {
@@ -324,4 +344,23 @@ body {
   background: var(--color-accent-soft);
   padding: 0.75rem 0.875rem;
   max-width: 28rem;
+}
+
+.profile-meta {
+  margin: 0 0 1.25rem;
+  font-size: var(--font-size-body-sm);
+  color: var(--color-text-muted);
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 36rem;
+}
+
+.profile-form__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.75rem;
 }

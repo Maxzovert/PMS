@@ -19,6 +19,9 @@ Until migrated into this tree, also use:
 - [`../Docs/prd.md`](../Docs/prd.md)
 - [`../Docs/architecture.md`](../Docs/architecture.md)
 - [`../Docs/phases.md`](../Docs/phases.md)
+- [`../Docs/missed-during-development.md`](../Docs/missed-during-development.md) — deferred / missed work checklist
+
+Shortcut in this tree: [deferred-development.md](./deferred-development.md)
 
 ## Folders
 

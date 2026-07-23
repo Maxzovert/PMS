@@ -2,12 +2,21 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
 /**
- * Stub guard — redirects to /login when the Phase 1 auth placeholder is not signed in.
- * Real authorization will be enforced on the server later.
+ * Waits for /auth/me bootstrap, then redirects to /login when unauthenticated.
  */
 export function ProtectedRoute({ children }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, bootstrapping } = useAuth();
   const location = useLocation();
+
+  if (bootstrapping) {
+    return (
+      <div className="layout layout--app">
+        <main className="layout__main">
+          <p className="page__lead">Checking session…</p>
+        </main>
+      </div>
+    );
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace state={{ from: location.pathname }} />;

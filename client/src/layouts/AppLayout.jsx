@@ -3,11 +3,11 @@ import pmsIcon from '../assets/logo/Pms_Icon.png';
 import { useAuth } from '../auth/AuthContext';
 
 export function AppLayout() {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
   const navigate = useNavigate();
 
-  function handleSignOut() {
-    signOut();
+  async function handleSignOut() {
+    await signOut();
     navigate('/login', { replace: true });
   }
 
@@ -24,9 +24,18 @@ export function AppLayout() {
           />
           <span className="app-brand__title">PARKAR PMS</span>
         </Link>
-        <button type="button" className="btn btn--ghost" onClick={handleSignOut}>
-          Sign out
-        </button>
+        <div className="layout__header-actions">
+          {user?.phone ? (
+            <span className="layout__user-phone">{user.phone}</span>
+          ) : null}
+          <button
+            type="button"
+            className="btn btn--ghost"
+            onClick={handleSignOut}
+          >
+            Sign out
+          </button>
+        </div>
       </header>
       <main className="layout__main">
         <Outlet />

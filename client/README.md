@@ -23,23 +23,24 @@ API base URL must point at the running server (`VITE_API_BASE_URL`, default `htt
 | `npm run build` | Production build |
 | `npm run preview` | Preview production build |
 
-## Routes (Phase 1 shell)
+## Routes
 
 | Path | Page |
 |------|------|
 | `/` | Redirect to login or dashboard |
-| `/login` | Auth placeholder (OTP UI disabled) |
-| `/dashboard` | Protected stub + API health |
+| `/login` | Mobile + OTP sign-in |
+| `/dashboard` | Protected home + API health |
 | `*` | Not found |
 
-Auth is a **dev stub** (`sessionStorage`) — not real OTP/sessions. Use “Continue to dashboard (dev stub)” on the login page.
+Auth uses httpOnly session cookie from the API (`credentials: 'include'`). In local/dev, OTP is mocked — use `DEV_OTP_FIXED` on the server or read the code from server logs.
 
 ## API layer
 
 Shared helpers live in `src/api/`:
 
-- `apiGet` / `apiPost` / … — envelope-aware fetch
-- `getHealth()` — `GET /health` smoke check
+- `apiGet` / `apiPost` / … — envelope-aware fetch with cookies
+- `requestOtp` / `verifyOtp` / `getMe` / `logout`
+- `getHealth()` — `GET /health`
 - `ApiError` — failed calls
 
 ## Structure

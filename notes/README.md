@@ -47,6 +47,7 @@ This folder is only to help **you** understand.
 | 11 | [11-client-api-layer.md](11-client-api-layer.md) | How the React app will call the API |
 | 12 | [12-routing-auth-shell.md](12-routing-auth-shell.md) | React Router + login/dashboard stub (built) |
 | 14 | [14-sql-files.md](14-sql-files.md) | SQL lives in `server/sql/*.sql`, not in app code |
+| 15 | [15-authentication.md](15-authentication.md) | Mobile OTP login (Phase 2 first slice) |
 
 ---
 

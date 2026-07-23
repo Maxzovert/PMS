@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const {
   requestIdMiddleware,
   notFoundHandler,
@@ -9,13 +10,23 @@ const {
   logger,
 } = require('./common');
 const { getDatabaseStatus } = require('./database');
+const { createAuthRouter } = require('./auth');
 
 function createApp() {
   const app = express();
 
+  const clientOrigin =
+    process.env.CLIENT_ORIGIN || 'http://localhost:5173';
+
   app.use(requestIdMiddleware);
-  app.use(cors());
+  app.use(
+    cors({
+      origin: clientOrigin,
+      credentials: true,
+    }),
+  );
   app.use(express.json());
+  app.use(cookieParser());
 
   app.use((req, res, next) => {
     const started = Date.now();
@@ -33,7 +44,7 @@ function createApp() {
 
   app.get(
     '/health',
-    asyncHandler(async (req, res) => {
+    asyncHandler(async (_req, res) => {
       const database = getDatabaseStatus();
 
       sendSuccess(
@@ -48,6 +59,8 @@ function createApp() {
       );
     }),
   );
+
+  app.use('/auth', createAuthRouter());
 
   app.use(notFoundHandler);
   app.use(errorHandler);

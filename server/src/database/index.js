@@ -3,6 +3,7 @@ const { logger } = require('../common/logger');
 /** @type {import('pg').Pool | null} */
 let pool = null;
 let lastError = null;
+let ready = false;
 
 function getDatabaseUrl() {
   const url = process.env.DATABASE_URL;
@@ -19,6 +20,7 @@ async function initDatabase() {
   if (!databaseUrl) {
     pool = null;
     lastError = null;
+    ready = false;
     logger.info('Database skipped — DATABASE_URL is not set');
     return getDatabaseStatus();
   }
@@ -34,9 +36,10 @@ async function initDatabase() {
   });
 
   pool.on('error', (err) => {
-    lastError = err.message;
+    ready = false;
+    lastError = err.message || err.code || String(err);
     logger.error('Unexpected PostgreSQL pool error', {
-      errMessage: err.message,
+      errMessage: lastError,
     });
   });
 
@@ -44,13 +47,18 @@ async function initDatabase() {
     const client = await pool.connect();
     client.release();
     lastError = null;
+    ready = true;
     logger.info('Database pool connected');
   } catch (err) {
-    lastError = err instanceof Error ? err.message : String(err);
+    ready = false;
+    lastError =
+      (err && err.message) ||
+      (err && err.code) ||
+      String(err) ||
+      'connection refused';
     logger.error('Database connection failed', {
       errMessage: lastError,
     });
-    // Keep pool for later retries; status reports failure
   }
 
   return getDatabaseStatus();
@@ -79,15 +87,15 @@ function getDatabaseStatus() {
     };
   }
 
-  if (lastError) {
+  if (!ready) {
     return {
       configured: true,
       connected: false,
       message: 'Database connection failed',
-      // Safe operational hint only — never echo credentials
-      detail: lastError.includes('password')
-        ? 'Authentication or connection rejected'
-        : lastError,
+      detail:
+        lastError && String(lastError).toLowerCase().includes('password')
+          ? 'Authentication or connection rejected'
+          : lastError || 'unavailable',
     };
   }
 
@@ -106,6 +114,7 @@ async function closeDatabase() {
   await pool.end();
   pool = null;
   lastError = null;
+  ready = false;
   logger.info('Database pool closed');
 }
 

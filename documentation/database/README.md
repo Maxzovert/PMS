@@ -20,6 +20,8 @@ All queries/schema scripts live as files under:
 |------|---------|
 | `000_create_database.sql` | Create local DB `parkar` (run with `--admin`) |
 | `001_init_notes.sql` | Create `pms` schema placeholder |
+| `002_auth_users.sql` | `pms.users` |
+| `003_auth_otp_and_sessions.sql` | `pms.otp_challenges`, `pms.sessions` |
 
 ## Connection
 

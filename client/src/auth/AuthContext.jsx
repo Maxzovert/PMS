@@ -1,50 +1,78 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { getMe, logout as apiLogout, ApiError } from '../api';
 
 const AuthContext = createContext(null);
 
-const STORAGE_KEY = 'parkar.pms.authStub';
-
-function readStubFlag() {
-  try {
-    return sessionStorage.getItem(STORAGE_KEY) === '1';
-  } catch {
-    return false;
-  }
-}
-
 /**
- * Phase 1 auth placeholder only — not real sessions/OTP/JWT.
- * sessionStorage flag is for local shell testing and clears when the tab closes.
+ * Session is server httpOnly cookie. Client mirrors user from GET /auth/me.
  */
 export function AuthProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(readStubFlag);
+  const [user, setUser] = useState(null);
+  const [bootstrapping, setBootstrapping] = useState(true);
 
-  const devSignIn = useCallback(() => {
+  const refreshUser = useCallback(async (signal) => {
     try {
-      sessionStorage.setItem(STORAGE_KEY, '1');
-    } catch {
-      // ignore storage failures in private mode
+      const result = await getMe({ signal });
+      setUser(result.data?.user || null);
+      return result.data?.user || null;
+    } catch (err) {
+      if (err?.name === 'AbortError') {
+        throw err;
+      }
+      if (err instanceof ApiError && (err.status === 401 || err.code === 'UNAUTHORIZED')) {
+        setUser(null);
+        return null;
+      }
+      throw err;
     }
-    setIsAuthenticated(true);
   }, []);
 
-  const signOut = useCallback(() => {
+  useEffect(() => {
+    const controller = new AbortController();
+    refreshUser(controller.signal)
+      .catch(() => {
+        setUser(null);
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setBootstrapping(false);
+        }
+      });
+
+    return () => controller.abort();
+  }, [refreshUser]);
+
+  const setSessionUser = useCallback((nextUser) => {
+    setUser(nextUser);
+  }, []);
+
+  const signOut = useCallback(async () => {
     try {
-      sessionStorage.removeItem(STORAGE_KEY);
+      await apiLogout();
     } catch {
-      // ignore
+      // still clear local mirror
     }
-    setIsAuthenticated(false);
+    setUser(null);
   }, []);
 
   const value = useMemo(
     () => ({
-      isAuthenticated,
-      devSignIn,
+      user,
+      isAuthenticated: Boolean(user),
+      bootstrapping,
+      refreshUser,
+      setSessionUser,
       signOut,
-      isStub: true,
+      isStub: false,
     }),
-    [isAuthenticated, devSignIn, signOut],
+    [user, bootstrapping, refreshUser, setSessionUser, signOut],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

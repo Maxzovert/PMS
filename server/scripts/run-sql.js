@@ -101,6 +101,9 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error('FAIL:', err.message);
+  console.error('FAIL:', err && err.message ? err.message : err);
+  if (err && err.code) {
+    console.error('CODE:', err.code);
+  }
   process.exit(1);
 });

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { getHealth, ApiError } from '../api';
+import { useAuth } from '../auth/AuthContext';
 
 export function DashboardPage() {
+  const { user } = useAuth();
   const [health, setHealth] = useState({
     status: 'loading',
     message: 'Checking API…',
@@ -53,8 +55,8 @@ export function DashboardPage() {
     <section className="page page--dashboard">
       <h1 className="page__title">Dashboard</h1>
       <p className="page__lead">
-        Owner home placeholder. Bookings, occupancy, and earnings will land
-        here in later phases.
+        Signed in as {user?.phone || 'owner'}. Bookings and earnings come in
+        later phases.
       </p>
 
       <section

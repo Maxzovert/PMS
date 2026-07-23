@@ -192,6 +192,17 @@ body {
   color: var(--color-surface);
 }
 
+.layout__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.layout__user-phone {
+  font-size: var(--font-size-caption);
+  opacity: 0.85;
+}
+
 .layout__header--app .app-brand__title {
   font-size: var(--font-size-h3);
   color: var(--color-surface);
@@ -296,6 +307,21 @@ body {
   color: var(--color-surface);
 }
 
+.btn--ghost-dark {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--color-border) 55%, transparent);
+  color: var(--color-secondary);
+}
+
 .layout__header--app .btn--ghost:hover {
   background: color-mix(in srgb, var(--color-surface) 12%, transparent);
+}
+
+.page__error {
+  margin: 1rem 0 0;
+  font-size: var(--font-size-body-sm);
+  color: var(--color-secondary-deep);
+  background: var(--color-accent-soft);
+  padding: 0.75rem 0.875rem;
+  max-width: 28rem;
 }

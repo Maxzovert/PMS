@@ -41,6 +41,7 @@ export async function apiRequest(path, options = {}) {
     method,
     headers,
     signal: options.signal,
+    credentials: 'include',
   };
 
   if (options.body !== undefined) {

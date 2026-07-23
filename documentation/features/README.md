@@ -5,10 +5,10 @@ One major feature per file. Use the template in [ai-engineering-handbook.md](../
 Active:
 
 - `api-response-foundation.md` — success/error envelope, request IDs, health DB status
+- `authentication.md` — mobile OTP login (Phase 2 first slice, mock SMS in dev)
 
 Planned:
 
-- `authentication.md`
 - `owner-profile.md`
 - `parking-registration.md`
 - `parking-availability.md`

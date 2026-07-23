@@ -14,8 +14,8 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 
 | Area | State |
 |------|--------|
-| Frontend | React + Vite + JSX; OTP login + API cookies (`client/`) |
-| Backend | Express + JS; `/auth/*`, logger, errors, `pg`, SQL files (`server/`) |
+| Frontend | React + Vite + JSX web portal (`client/`); Expo mobile companion (`mobile/`) |
+| Backend | Express + JS; `/auth/*`, `/owners/*`, logger, errors, `pg`, SQL files (`server/`) |
 | Auth / bookings / payments | Auth OTP first slice; other features documented only |
 
 ---
@@ -24,10 +24,11 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 
 | Layer | Choice |
 |-------|--------|
-| Frontend | React, Vite, JavaScript (JSX) |
+| Frontend (web) | React, Vite, JavaScript (JSX) — `client/` |
+| Frontend (mobile) | Expo React Native, JavaScript — `mobile/` |
 | Backend | Node.js, Express, JavaScript |
 | Architecture | Modular monolith (shared backend with Driver App / Admin later) |
-| Database | PostgreSQL via `pg` when `DATABASE_URL` is set (no schema/migrations yet) |
+| Database | PostgreSQL via `pg` when `DATABASE_URL` is set |
 
 ---
 
@@ -35,12 +36,12 @@ Owners register locations, set capacity and pricing, manage bookings and walk-in
 
 ```text
 PMS/
-├── client/             # React owner portal (JavaScript / JSX)
+├── client/             # React owner portal (web)
 │   └── src/assets/     # Runtime fonts, logo, decor (import only from here)
+├── mobile/             # Expo React Native companion (same API)
 ├── server/             # Express API (JavaScript)
 ├── notes/              # Easy learning notes for foundation concepts
-├── Docs/               # Product PRD, architecture, phases (legacy location)
-├── documentation/      # AI handbook, UI design, feature docs
+├── documentation/      # AI handbook, UI design, feature docs (incl. Docs/)
 ├── Assets/             # Staging archive (do not import in app)
 ├── Fonts/              # Staging archive (do not import in app)
 ├── AGENTS.md           # Short AI instructions
@@ -67,6 +68,17 @@ npm run dev
 ```
 
 → http://localhost:5173
+
+### Mobile (Expo)
+
+```bash
+cd mobile
+npm install
+cp .env.example .env
+npm start
+```
+
+Set `EXPO_PUBLIC_API_BASE_URL` (Android emulator often `http://10.0.2.2:3000`). See `mobile/README.md`.
 
 ### Backend
 

@@ -21,7 +21,7 @@ MVP role stored on user: `owner` (default). RBAC matrix comes later.
 
 - Request OTP for a phone number
 - Verify OTP and create/load user
-- Issue httpOnly session cookie
+- Issue httpOnly session cookie (web) and return `sessionToken` for native Bearer auth
 - `GET /auth/me`, `POST /auth/logout`
 - Rate limits and OTP expiry
 - Mock OTP delivery in non-production (no SMS vendor yet)
@@ -43,12 +43,12 @@ POST /auth/request-otp
         ↓
 Enter OTP
         ↓
-POST /auth/verify-otp  → session cookie
+POST /auth/verify-otp  → session cookie (web) + sessionToken (native)
         ↓
 GET /auth/me → dashboard
 ```
 
-Logout: `POST /auth/logout` invalidates session and clears cookie.
+Logout: `POST /auth/logout` invalidates session and clears cookie (web) / client drops Bearer token (native).
 
 ## Business Rules
 
@@ -80,9 +80,12 @@ Logout: `POST /auth/logout` invalidates session and clears cookie.
 | Method | Path | Auth | Success data |
 |--------|------|------|----------------|
 | `POST` | `/auth/request-otp` | No | `{ phone, expiresInSeconds }` |
-| `POST` | `/auth/verify-otp` | No | `{ user }` + Set-Cookie |
+| `POST` | `/auth/verify-otp` | No | `{ user, sessionToken }` + Set-Cookie |
 | `POST` | `/auth/logout` | Session | `{}` + clear cookie |
 | `GET` | `/auth/me` | Session | `{ user }` |
+
+Session auth accepts either cookie `parkar_session` or `Authorization: Bearer <sessionToken>`.
+Native app (`mobile/`) stores `sessionToken` in SecureStore; web (`client/`) relies on the cookie.
 
 ### Request bodies
 
@@ -192,3 +195,4 @@ Defer — count successful logins later.
 | Date | Change |
 |------|--------|
 | 2026-07-23 | Phase 2 first slice: doc + mock OTP + session cookie APIs |
+| 2026-07-23 | `verify-otp` also returns `sessionToken` for Expo mobile Bearer auth |

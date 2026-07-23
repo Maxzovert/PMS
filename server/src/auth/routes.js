@@ -29,7 +29,12 @@ function createAuthRouter() {
       });
 
       res.cookie(COOKIE_NAME, result.token, cookieOptions());
-      sendSuccess(res, { user: result.user }, 'Signed in');
+      // sessionToken included for native clients (Bearer); web keeps using cookie
+      sendSuccess(
+        res,
+        { user: result.user, sessionToken: result.token },
+        'Signed in',
+      );
     }),
   );
 
